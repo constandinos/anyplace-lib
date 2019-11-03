@@ -32,31 +32,31 @@ public class Tester {
 		} else {
 			AnyplacePost client = new AnyplacePost("ap.cs.ucy.ac.cy", "443");
 
-			if (args[0] == "-allBuildingFloors") {
+			if (args[0].equals("-allBuildingFloors")) {
 				response = client.allBuildingFloors(buid);
 				System.out.println(response + "\n");
-			} else if (args[0] == "-buildingAll") {
+			} else if (args[0].equals("-buildingAll")) {
 				response = client.buildingAll();
 				System.out.println(response + "\n");
-			} else if (args[0] == "-headmapBuidFloor") {
+			} else if (args[0].equals("-headmapBuidFloor")) {
 				response = client.radioheatMapBuildingFloor(buid, floor);
 				System.out.println(response + "\n");
-			} else if (args[0] == "-buidFloorPOI") {
+			} else if (args[0].equals("-buidFloorPOI")) {
 				response = client.allBuildingFloorPOIs(buid, floor);
 				System.out.println(response + "\n");
-			} else if (args[0] == "-floor64") {
+			} else if (args[0].equals("-floor64")) {
 				response = client.floorplans64(access_token, buid, floor);
 				System.out.println(response.substring(0, 100) + "\n");
-			} else if (args[0] == "-floortiles") {
+			} else if (args[0].equals("-floortiles")) {
 				response = client.floortiles(access_token, buid, floor);
 				System.out.println(response + "\n"); /* .substring(0, 100) */
-			} else if (args[0] == "-radioBuidFloor") {
+			} else if (args[0].equals("-radioBuidFloor")) {
 				response = client.radioByBuildingFloor(access_token, buid, floor);
 				System.out.println(response + "\n"); /* .substring(0, 100) */
-			} else if (args[0] == "-navigationXY") {
+			} else if (args[0].equals("-navigationXY")) {
 				response = client.navigationXY(access_token, pois_to, buid, floor, coordinates_la, coordinates_lo);
 				System.out.println(response + "\n"); /* .substring(0, 100) */
-			} else if (args[0] == "-navPoiToPoi") {
+			} else if (args[0].equals("-navPoiToPoi")) {
 				response = client.navigationPoiToPoi(access_token, pois_to, pois_from);
 				System.out.println(response + "\n");
 			}
