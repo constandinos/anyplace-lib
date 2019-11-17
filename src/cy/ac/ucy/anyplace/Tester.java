@@ -44,7 +44,7 @@ public class Tester {
 
 			System.out.println("\nBlueprints");
 			System.out.println("----------");
-			System.out.println("-floor64: Downloads the floor plan in a base64 png format (w/o prefix)");
+			System.out.println("-floor64: Downloads the floor plan in a base64 png format (w/o prefix).");
 			System.out.println("-floortiles: Fetches the floor plan tiles zip link.");
 
 			System.out.println("\nPosition");
