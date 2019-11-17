@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Tester {
+	
 	/**
 	 * The main entry to our library. Inside the main function you can find the
 	 * implementation of the command line interface.
