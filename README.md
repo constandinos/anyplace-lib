@@ -1,5 +1,5 @@
 # anyplace-lib
-<<<<<<< HEAD
+
 All endpoints implemented in our Anyplace Library can be found below:
 
 Navigation
@@ -43,5 +43,3 @@ Position
 -radioBuidFloor: Radiomap using all the entries near the coordinate parameters.
 
 -estimatePosition: Estimate the location of the user.
-=======
->>>>>>> branch 'master' of https://github.com/constandinos/anyplace-lib.git
