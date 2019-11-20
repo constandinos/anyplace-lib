@@ -30,6 +30,7 @@ public class MainActivity extends AppCompatActivity{
                             AnyplacePost client = new AnyplacePost("ap.cs.ucy.ac.cy", "443");
                             response = client.allBuildingFloors(str);
                             text.setText(response);
+
                         }
                         catch (Exception ex) {
                             ex.printStackTrace();
