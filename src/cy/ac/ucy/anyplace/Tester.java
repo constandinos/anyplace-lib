@@ -1,10 +1,10 @@
 package cy.ac.ucy.anyplace;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 
 public class Tester {
-	
+
 	/**
 	 * The main entry to our library. Inside the main function you can find the
 	 * implementation of the command line interface.
@@ -22,7 +22,29 @@ public class Tester {
 		String access_token = "eyJhbGciOiJSUzI1NiIsImtpZCI6IjhjNThlMTM4NjE0YmQ1ODc0MjE3MmJkNTA4MGQxOTdkMmIyZGQyZjMiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJhY2NvdW50cy5nb29nbGUuY29tIiwiYXpwIjoiNTg3NTAwNzIzOTcxLXNpOHM0cXFhdDl2NWVmZ2VtbmViaWhwaTNxZTlvbmxwLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwiYXVkIjoiNTg3NTAwNzIzOTcxLXNpOHM0cXFhdDl2NWVmZ2VtbmViaWhwaTNxZTlvbmxwLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwic3ViIjoiMTA0NDQxMzA0OTI3MzE2MzM5NDM2IiwiZW1haWwiOiJhY2hpbC5jaHJpc3Rvc0BnbWFpbC5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiYXRfaGFzaCI6InpSVUJ4cVBjT29xejB0cVpkNEg1WnciLCJuYW1lIjoiY2hyaXN0b3MgYWNoaWxsZW9zIiwicGljdHVyZSI6Imh0dHBzOi8vbGgzLmdvb2dsZXVzZXJjb250ZW50LmNvbS8tVTVqVzlpRk9kRVEvQUFBQUFBQUFBQUkvQUFBQUFBQUFBQUEvQUNIaTNyYzZfTEEzLWV2dGFJbXVTdDU0cFJRdmd1T1BOQS9zOTYtYy9waG90by5qcGciLCJnaXZlbl9uYW1lIjoiY2hyaXN0b3MiLCJmYW1pbHlfbmFtZSI6ImFjaGlsbGVvcyIsImxvY2FsZSI6ImVuIiwiaWF0IjoxNTcwMDIzNDE2LCJleHAiOjE1NzAwMjcwMTYsImp0aSI6ImMxMWY2YzIwMjgwZjc1YmMxZjE4NDMzM2QyZGM5NWY4MTYxYTZkNWUifQ.W_8IsTty5D7UdbcHkjrHyhNkEOyFc1r8fluvnd3kpV5wmK9Z4Tb0zv-W9DOr6mOGZUbaLvHR0Hncbqgec_iN9YNV281O3NRd-XERsn-Gf3oZ2z0Nbm5-_4NRg-WkLER4Ouo-upCd9TvXZwWqK0NNZm1Ka8N_JCzU0vb29T7lASZAZQ5POLtg3Z7PoAIk-h1HoO8Wb8acb-fkVaoLd-WR4sEhC93mxEaKe3DycXT0QtaO27GAYypz6HfWM3PsyPHio9nGr-GSt7ZNZuJYjnzqyRhXnx-H2dRggWbS6EAREWmBH2sdWe7fzMBFt_GNCl9q3yGVJQht5IOTmPDG9gixsw";
 		String response;
 
-		if (args.length == 0) {/*Menu of options is shown if no arguments are given.*/
+		String BSSID[] = { "/sbin/iwconfig", " | grep 'Access Point' ", " | tr -s \" \" ", " | cut -d \" \" -f7 " };
+
+		String RSSI[] = { "/sbin/iwconfig", " | grep 'Signal level' ", " | tr -s \" \" ", " | cut -d \" \" -f5 ",
+				"cut -d\"=\" -f2" };
+
+		Process p, p2;
+		String s = "", s2="";
+		try {
+			p = Runtime.getRuntime().exec(BSSID);
+			p2 = Runtime.getRuntime().exec(RSSI);
+
+			BufferedReader br = new BufferedReader(new InputStreamReader(p.getInputStream()));
+			s = br.readLine();
+			br = new BufferedReader(new InputStreamReader(p2.getInputStream()));
+			s2 = br.readLine();
+			System.out.println(s);
+			System.out.println(s2);
+			p.destroy();
+			p2.destroy();
+		} catch (Exception e) {
+			System.out.println("Error");
+		}
+		if (args.length == 0) {/* Menu of options is shown if no arguments are given. */
 			System.out.println("Please use one of the available options available options:");
 
 			System.out.println("Navigation");
@@ -50,7 +72,8 @@ public class Tester {
 
 			System.out.println("\nPosition");
 			System.out.println("--------");
-			System.out.println("-radioByCoordinatesFloor: Radiomap using all the entries near the coordinate parameters.");
+			System.out.println(
+					"-radioByCoordinatesFloor: Radiomap using all the entries near the coordinate parameters.");
 			System.out.println("-radioBuidFloor: Radiomap using all the entries near the coordinate parameters.");
 			System.out.println("-estimatePosition: Estimate the location of the user.");
 		} else {
@@ -202,9 +225,7 @@ public class Tester {
 				String buid = args[1];
 				String floor = args[2];
 				String algorithm = args[3];
-				List<String> aps = new ArrayList<String>();
-				for (int i = 4; i < args.length; i++)
-					aps.add(args[i]);
+				String aps[] = new String[args.length - 3];
 				response = client.estimatePosition(buid, floor, aps, algorithm);
 				System.out.println(response + "\n"); /* .substring(0, 100) */
 			} else {
