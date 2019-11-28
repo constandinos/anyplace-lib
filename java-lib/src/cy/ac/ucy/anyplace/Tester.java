@@ -206,7 +206,7 @@ public class Tester {
 				String algorithm = args[3];
 
 				String cmd[] = { "/bin/sh", "-c",
-						"iwlist wlx90f652e5e52b scan | awk  '/Address/ {print $5}; /level/ {print $3}' |  cut -d\"=\" -f2 " };
+						"iwlist wlo1 scan | awk  '/Address/ {print $5}; /level/ {print $3}' |  cut -d\"=\" -f2 " };
 
 				String aps[] = new String[200];
 				Process p;
