@@ -223,7 +223,7 @@ public class Tester {
 						s = br.readLine();
 						temp += s;
 						temp += "}";
-						temp.toLowerCase();
+						temp = temp.toLowerCase();
 						aps[counter++] = temp;
 						System.out.println(temp);
 					}
