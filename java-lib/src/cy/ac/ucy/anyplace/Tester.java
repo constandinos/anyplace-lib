@@ -225,7 +225,6 @@ public class Tester {
 						temp += "}";
 						temp = temp.toLowerCase();
 						aps[counter++] = temp;
-						System.out.println(temp);
 					}
 					p.destroy();
 					br.close();
