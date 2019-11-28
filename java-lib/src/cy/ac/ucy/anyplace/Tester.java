@@ -41,8 +41,8 @@ public class Tester {
 			System.out.println("-allBuildingFloors: Get all floors of a building.");
 			System.out.println("-allBuildingPOIs: Get all POIs inside a building.");
 			System.out.println("-allBuildingFloorPOIs: Get all POIs inside a floor.");
-			System.out.println("-connectionsByFloor: Get all POI connecitons inside a floor.");
-			System.out.println("-headmapBuidFloor: Get all POI connecitons inside a floor.");
+			System.out.println("-connectionsByFloor: Get all POI connections inside a floor.");
+			System.out.println("-heatmapBuidFloor: Get all positions with their respective Wi-Fi radio measurements.");
 
 			System.out.println("\nBlueprints");
 			System.out.println("----------");
@@ -51,9 +51,9 @@ public class Tester {
 
 			System.out.println("\nPosition");
 			System.out.println("--------");
-			System.out.println(
-					"-radioByCoordinatesFloor: Radiomap using all the entries near the coordinate parameters.");
-			System.out.println("-radioBuidFloor: Radiomap using all the entries near the coordinate parameters.");
+			System.out.println("-radioByCoordinatesFloor: Radiomap using all the entries near the coordinate parameters.");
+			System.out.println("-radioBuidFloor: Radiomap based on building and floor.");
+			System.out.println("-radioBuidFloorRange: Radiomap by limiting the range.");
 			System.out.println("-estimatePosition: Estimate the location of the user. Linux ONLY.");
 		} else {
 			AnyplacePost client = new AnyplacePost("ap-dev.cs.ucy.ac.cy", "443");
@@ -196,6 +196,18 @@ public class Tester {
 				String floor = args[2];
 				response = client.radioByBuildingFloor(access_token, buid, floor);
 				System.out.println(response + "\n"); /* .substring(0, 100) */
+			} else if (args[0].equals("-radioBuidFloorRange")) {
+						if (args.length != 3) {
+							System.out.println("Usage: -radioBuidFloorRange <buid> <foor> <coordinates_lat> <coordinates_lon> <range>");
+							System.exit(0);
+						}
+						String buid = args[1];
+						String floor = args[2];
+						String coordinates_lat = args[3];
+						String coordinates_lon = args[4];
+						String range =args[5];
+						response = client.radioByBuildingFloorRange(buid, floor, coordinates_lat, coordinates_lon, range);
+						System.out.println(response + "\n"); /* .substring(0, 100) */
 			} else if (args[0].equals("-estimatePosition")) {
 				if (args.length >= 5) {
 					System.out.println("Usage: -estimatePosition <buid> <floor> <algorithm>");

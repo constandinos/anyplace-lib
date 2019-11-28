@@ -26,9 +26,9 @@ Mapping(Public)
 
 -allBuildingFloorPOIs: Get all POIs inside a floor.
 
--connectionsByFloor: Get all POI connecitons inside a floor.
+-connectionsByFloor: Get all POI connections inside a floor.
 
--headmapBuidFloor: Get all POI connecitons inside a floor.
+-heatmapBuidFloor: Get all positions with their respective Wi-Fi radio measurements.
 
 Blueprints
 ----------
