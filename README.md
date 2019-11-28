@@ -42,4 +42,4 @@ Position
 
 -radioBuidFloor: Radiomap using all the entries near the coordinate parameters.
 
--estimatePosition: Estimate the location of the user. (Linux ONLY at the moment)
+-estimatePosition: Estimate the location of the user. 
