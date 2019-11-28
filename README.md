@@ -42,4 +42,8 @@ Position
 
 -radioBuidFloor: Radiomap using all the entries near the coordinate parameters.
 
--estimatePosition: Estimate the location of the user. 
+-radioBuidFloorRange: Radiomap using all the entries near the coordinate parameters.
+
+-estimatePosition: Estimate the location of the user.
+
+-estimatePosOffline: Estimate the location of the user offline. Needs the radiomap file. 

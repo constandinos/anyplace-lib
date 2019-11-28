@@ -54,7 +54,9 @@ public class Tester {
 			System.out.println("-radioByCoordinatesFloor: Radiomap using all the entries near the coordinate parameters.");
 			System.out.println("-radioBuidFloor: Radiomap based on building and floor.");
 			System.out.println("-radioBuidFloorRange: Radiomap by limiting the range.");
-			System.out.println("-estimatePosition: Estimate the location of the user. Linux ONLY.");
+			System.out.println("-estimatePosition: Estimate the location of the user.");
+			System.out.println("-estimatePosOffline: Estimate the location of the user offline. Needs the radiomap file");
+
 		} else {
 			AnyplacePost client = new AnyplacePost("ap-dev.cs.ucy.ac.cy", "443");
 
@@ -246,6 +248,45 @@ public class Tester {
 				aps=Arrays.copyOf(aps, counter);
 
 				response = client.estimatePosition(buid, floor, aps, algorithm);
+				System.out.println(response + "\n"); /* .substring(0, 100) */
+			} else if (args[0].equals("-estimatePosOffline")) {
+				if (args.length >= 5) {
+					System.out.println("Usage: -estimatePosOffline <buid> <floor> <algorithm>");
+					System.exit(0);
+				}
+				String buid = args[1];
+				String floor = args[2];
+				String algorithm = args[3];
+
+				String cmd[] = { "/bin/sh", "-c",
+						"sudo iwlist wlo1 scan | awk  '/Address/ {print $5}; /level/ {print $3}' |  cut -d\"=\" -f2 " };
+
+				String aps[] = new String[200];
+				Process p;
+				String s, temp;
+				int counter = 0;
+				try {
+					p = Runtime.getRuntime().exec(cmd);
+
+					BufferedReader br = new BufferedReader(new InputStreamReader(p.getInputStream()));
+					while ((s = br.readLine()) != null && counter <= 20) {
+						temp = "{\"bssid\":\"";
+						temp += s;
+						temp += "\",\"rss\":";
+						s = br.readLine();
+						temp += s;
+						temp += "}";
+						temp = temp.toLowerCase();
+						aps[counter++] = temp;
+					}
+					p.destroy();
+					br.close();
+				} catch (Exception ex) {
+					ex.printStackTrace();
+				}
+				aps=Arrays.copyOf(aps, counter);
+
+				response = client.estimatePositionOffline(buid, floor, aps, algorithm);
 				System.out.println(response + "\n"); /* .substring(0, 100) */
 			} else {
 				System.out.println("The option given is not valid.");
