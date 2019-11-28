@@ -150,9 +150,9 @@ public class Tester {
 				String floor = args[2];
 				response = client.connectionsByFloor(buid, floor);
 				System.out.println(response + "\n");
-			} else if (args[0].equals("-headmapBuidFloor")) {
+			} else if (args[0].equals("-heatmapBuidFloor")) {
 				if (args.length != 3) {
-					System.out.println("Usage: -headmapBuidFloor <buid> <floor>");
+					System.out.println("Usage: -heatmapBuidFloor <buid> <floor>");
 					System.exit(0);
 				}
 				String buid = args[1];
