@@ -48,6 +48,8 @@ public class RestClient {
 			return null;
 		}
 	}
+
+	
 	
 	public byte[] getFileWithGet(String host, String url) {
 
@@ -106,7 +108,7 @@ public byte[] getFileWithPost(String host, String url) {
 		}
 	}
 
-	/* Here we make the payload that contains all the nessesary parameters
+	/* Here we make the payload that contains all the necessary parameters
 	 * 
 	 */
 	private String makeRequestBody(Map<String, String> map) {
@@ -119,12 +121,13 @@ public byte[] getFileWithPost(String host, String url) {
 				body = body + "\"" + str.getKey() + "\":\"" + str.getValue() + "\",";
 
 			}
+
 			int length = body.length();
 			body = body.substring(0, length - 1) + "}";
 		} else {
 			body = body + "}";
 		}
-		
+
 		return body;
 	}
 

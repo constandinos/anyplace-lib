@@ -6,18 +6,14 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Base64;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.imageio.ImageIO;
 
-import org.json.JSONArray;
-import org.json.JSONException;
+
 import org.json.JSONObject;
 
 public class AnyplacePost {
@@ -25,6 +21,7 @@ public class AnyplacePost {
 	private String host;
 	private String path;
 	private String port;
+	private String cache = "res/";
 
 	public AnyplacePost(String host, String port) {
 
@@ -32,23 +29,23 @@ public class AnyplacePost {
 		setPort(port);
 
 	}
-	
+
 	private static BufferedImage decodeToImage(String imageString) {
-		 
-        BufferedImage image = null;
-        byte[] imageByte;
-        try {
-            Base64.Decoder decoder =Base64.getDecoder();
-            imageByte = decoder.decode(imageString);
-            ByteArrayInputStream bis = new ByteArrayInputStream(imageByte);
-            image = ImageIO.read(bis);
-            bis.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-            
-        }
-        return image;
-    }
+
+		BufferedImage image = null;
+		byte[] imageByte;
+		try {
+			Base64.Decoder decoder = Base64.getDecoder();
+			imageByte = decoder.decode(imageString);
+			ByteArrayInputStream bis = new ByteArrayInputStream(imageByte);
+			image = ImageIO.read(bis);
+			bis.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+
+		}
+		return image;
+	}
 
 	// Navigation
 	// POI Details
@@ -89,36 +86,29 @@ public class AnyplacePost {
 		params.put("coordinates_lat", coordinates_lat);
 		params.put("coordinates_lon", coordinates_lon);
 
-
 		String response = client.doPost(params, getHost(), getPath());
-		
+
 		JSONObject obj = new JSONObject(response);
 		int statusCode = obj.getInt("status_code");
 
 		if (statusCode == 200) {
-			
-			String temp = "res/" + buid + "/" + floor;
-			Path path = Paths.get(temp);
-
-			try {
-				Files.createDirectories(path);
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-
-			String filename = "res/" + buid + "/" + floor + "/pathTo_" + pois_to +".json";
-		
-			try {
-				FileOutputStream outputStream = new FileOutputStream(filename);
-				outputStream.write(response.getBytes());
-				outputStream.close();
-
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-
+			/*
+			 * String temp = cache + buid + "/" + floor;
+			 * 
+			 * Path path = Paths.get(temp);
+			 * 
+			 * try { Files.createDirectories(path); } catch (IOException e1) { // TODO
+			 * Auto-generated catch block e1.printStackTrace(); }
+			 * 
+			 * String filename = cache + buid + "/" + floor + "/pathTo_" + pois_to +
+			 * ".json";
+			 * 
+			 * try { FileOutputStream outputStream = new FileOutputStream(filename);
+			 * outputStream.write(response.getBytes()); outputStream.close();
+			 * 
+			 * } catch (IOException e) { // TODO Auto-generated catch block
+			 * e.printStackTrace(); }
+			 */
 		}
 
 		else {
@@ -141,35 +131,26 @@ public class AnyplacePost {
 		params.put("pois_to", pois_to);
 
 		String response = client.doPost(params, getHost(), getPath());
-		
 
 		JSONObject obj = new JSONObject(response);
 		int statusCode = obj.getInt("status_code");
 
 		if (statusCode == 200) {
-			
-			String temp = "res/navigation" ;
-			Path path = Paths.get(temp);
-
-			try {
-				Files.createDirectories(path);
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-
-			String filename = "res/navigation/" +"pois_from_" + pois_from + "_to_pois_" + pois_to +".json";
-		
-			try {
-				FileOutputStream outputStream = new FileOutputStream(filename);
-				outputStream.write(response.getBytes());
-				outputStream.close();
-
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-
+			/*
+			 * String temp = cache+"navigation"; Path path = Paths.get(temp);
+			 * 
+			 * try { Files.createDirectories(path); } catch (IOException e1) { // TODO
+			 * Auto-generated catch block e1.printStackTrace(); }
+			 * 
+			 * String filename = "res/navigation/" + "pois_from_" + pois_from + "_to_pois_"
+			 * + pois_to + ".json";
+			 * 
+			 * try { FileOutputStream outputStream = new FileOutputStream(filename);
+			 * outputStream.write(response.getBytes()); outputStream.close();
+			 * 
+			 * } catch (IOException e) { // TODO Auto-generated catch block
+			 * e.printStackTrace(); }
+			 */
 		}
 
 		else {
@@ -233,41 +214,28 @@ public class AnyplacePost {
 		params.put("buid", buid);
 
 		String response = client.doPost(params, getHost(), getPath());
-
-		JSONObject obj = new JSONObject(response);
-
-		JSONArray floors = obj.getJSONArray("floors");
-		int length = floors.length();
-		for (int i = 0; i < length; i++) {
-			String temp = "res/" + buid + "/" + floors.getJSONObject(i).getString("floor_name");
-			Path path = Paths.get(temp);
-
-			try {
-				Files.createDirectories(path);
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-			String filename = "res/" + buid + "/" + floors.getJSONObject(i).getString("floor_name") + "/" + "floor.txt";
-
-			FileOutputStream outputStream;
-			try {
-				outputStream = new FileOutputStream(filename);
-				outputStream.write(floors.getJSONObject(i).toString().getBytes());
-				outputStream.close();
-			} catch (FileNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (JSONException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-
-		}
-
+		/*
+		 * JSONObject obj = new JSONObject(response);
+		 * 
+		 * JSONArray floors = obj.getJSONArray("floors"); int length = floors.length();
+		 * for (int i = 0; i < length; i++) { String temp = "res/" + buid + "/" +
+		 * floors.getJSONObject(i).getString("floor_name"); Path path = Paths.get(temp);
+		 * 
+		 * try { Files.createDirectories(path); } catch (IOException e1) { // TODO
+		 * Auto-generated catch block e1.printStackTrace(); } String filename = "res/" +
+		 * buid + "/" + floors.getJSONObject(i).getString("floor_name") + "/" +
+		 * "floor.txt";
+		 * 
+		 * FileOutputStream outputStream; try { outputStream = new
+		 * FileOutputStream(filename);
+		 * outputStream.write(floors.getJSONObject(i).toString().getBytes());
+		 * outputStream.close(); } catch (FileNotFoundException e) { // TODO
+		 * Auto-generated catch block e.printStackTrace(); } catch (JSONException e) {
+		 * // TODO Auto-generated catch block e.printStackTrace(); } catch (IOException
+		 * e) { // TODO Auto-generated catch block e.printStackTrace(); }
+		 * 
+		 * }
+		 */
 		return response;
 	}
 
@@ -280,31 +248,19 @@ public class AnyplacePost {
 		params.put("buid", buid);
 
 		String response = client.doPost(params, getHost(), getPath());
-
-		String temp = "res/" + buid;
-		Path path = Paths.get(temp);
-
-		try {
-			Files.createDirectories(path);
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		String filename = "res/" + buid + "/" + "allPOIsOfBuilding.json";
-
-		FileOutputStream outputStream;
-		try {
-			outputStream = new FileOutputStream(filename);
-			outputStream.write(response.getBytes());
-			outputStream.close();
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
+		/*
+		 * String temp = "res/" + buid; Path path = Paths.get(temp);
+		 * 
+		 * try { Files.createDirectories(path); } catch (IOException e1) { // TODO
+		 * Auto-generated catch block e1.printStackTrace(); } String filename = "res/" +
+		 * buid + "/" + "allPOIsOfBuilding.json";
+		 * 
+		 * FileOutputStream outputStream; try { outputStream = new
+		 * FileOutputStream(filename); outputStream.write(response.getBytes());
+		 * outputStream.close(); } catch (FileNotFoundException e) { // TODO
+		 * Auto-generated catch block e.printStackTrace(); } catch (IOException e) { //
+		 * TODO Auto-generated catch block e.printStackTrace(); }
+		 */
 		return response;
 	}
 
@@ -317,73 +273,49 @@ public class AnyplacePost {
 		params.put("buid", buid);
 		params.put("floor_number", floor);
 
-
 		String response = client.doPost(params, getHost(), getPath());
-
-		String temp = "res/" + buid + "/" + floor;
-		Path path = Paths.get(temp);
-
-		try {
-			Files.createDirectories(path);
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		String filename = "res/" + buid + "/" + floor + "/" + "allPOIsOfFloor.json";
-
-		FileOutputStream outputStream;
-		try {
-			outputStream = new FileOutputStream(filename);
-			outputStream.write(response.getBytes());
-			outputStream.close();
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
+		/*
+		 * String temp = "res/" + buid + "/" + floor; Path path = Paths.get(temp);
+		 * 
+		 * try { Files.createDirectories(path); } catch (IOException e1) { // TODO
+		 * Auto-generated catch block e1.printStackTrace(); } String filename = cache +
+		 * buid + "/" + floor + "/" + "allPOIsOfFloor.json";
+		 * 
+		 * FileOutputStream outputStream; try { outputStream = new
+		 * FileOutputStream(filename); outputStream.write(response.getBytes());
+		 * outputStream.close(); } catch (FileNotFoundException e) { // TODO
+		 * Auto-generated catch block e.printStackTrace(); } catch (IOException e) { //
+		 * TODO Auto-generated catch block e.printStackTrace(); }
+		 */
 		return response;
 	}
-	
+
 	// Get all connections between POIs inside of a floor of a building
-		public String connectionsByFloor(String buid, String floor) {
+	public String connectionsByFloor(String buid, String floor) {
 
-			RestClient client = new RestClient();
-			setPath("/anyplace/mapping/connection/all_floor");
-			Map<String, String> params = new HashMap<String, String>();
-			params.put("buid", buid);
-			params.put("floor_number", floor);
+		RestClient client = new RestClient();
+		setPath("/anyplace/mapping/connection/all_floor");
+		Map<String, String> params = new HashMap<String, String>();
+		params.put("buid", buid);
+		params.put("floor_number", floor);
 
-			String response = client.doPost(params, getHost(), getPath());
-
-			String temp = "res/" + buid + "/" + floor;
-			Path path = Paths.get(temp);
-
-			try {
-				Files.createDirectories(path);
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-			String filename = "res/" + buid + "/" + floor + "/" + "connections.json";
-
-			FileOutputStream outputStream;
-			try {
-				outputStream = new FileOutputStream(filename);
-				outputStream.write(response.getBytes());
-				outputStream.close();
-			} catch (FileNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-
-			return response;
-		}
+		String response = client.doPost(params, getHost(), getPath());
+		/*
+		 * 
+		 * String temp = "res/" + buid + "/" + floor; Path path = Paths.get(temp);
+		 * 
+		 * try { Files.createDirectories(path); } catch (IOException e1) { // TODO
+		 * Auto-generated catch block e1.printStackTrace(); } String filename = "res/" +
+		 * buid + "/" + floor + "/" + "connections.json";
+		 * 
+		 * FileOutputStream outputStream; try { outputStream = new
+		 * FileOutputStream(filename); outputStream.write(response.getBytes());
+		 * outputStream.close(); } catch (FileNotFoundException e) { // TODO
+		 * Auto-generated catch block e.printStackTrace(); } catch (IOException e) { //
+		 * TODO Auto-generated catch block e.printStackTrace(); }
+		 */
+		return response;
+	}
 
 	// Get all positions with their respective Wi-Fi radio measurements.
 
@@ -396,38 +328,26 @@ public class AnyplacePost {
 		setPath("/anyplace/mapping/radio/heatmap_building_floor");
 
 		String response = client.doPost(params, getHost(), getPath());
-
-		String temp = "res/" + buid + "/" + floor;
-		Path path = Paths.get(temp);
-
-		try {
-			Files.createDirectories(path);
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		String filename = "res/" + buid + "/" + floor + "/" + "radioHeatMap.json";
-
-		FileOutputStream outputStream;
-		try {
-			outputStream = new FileOutputStream(filename);
-			outputStream.write(response.getBytes());
-			outputStream.close();
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
+		/*
+		 * String temp = "res/" + buid + "/" + floor; Path path = Paths.get(temp);
+		 * 
+		 * try { Files.createDirectories(path); } catch (IOException e1) { // TODO
+		 * Auto-generated catch block e1.printStackTrace(); } String filename = "res/" +
+		 * buid + "/" + floor + "/" + "radioHeatMap.json";
+		 * 
+		 * FileOutputStream outputStream; try { outputStream = new
+		 * FileOutputStream(filename); outputStream.write(response.getBytes());
+		 * outputStream.close(); } catch (FileNotFoundException e) { // TODO
+		 * Auto-generated catch block e.printStackTrace(); } catch (IOException e) { //
+		 * TODO Auto-generated catch block e.printStackTrace(); }
+		 */
 		return response;
 
 	}
-	
-	//------------------------------------------------------------------------------------------------------------------
-	
-	//Download the floor plan in base64 png format
+
+	// ------------------------------------------------------------------------------------------------------------------
+
+	// Download the floor plan in base64 png format
 
 	public String floorplans64(String access_token, String buid, String floor) {
 
@@ -438,20 +358,15 @@ public class AnyplacePost {
 		params.put("buid", buid);
 		params.put("floor", floor);
 
-		String response =client.doPost(params, getHost(), getPath());
-		
-		String temp = "res/" + buid + "/" + floor;
-		Path path = Paths.get(temp);
+		String response = client.doPost(params, getHost(), getPath());
+		/*
+		 * String temp = "res/" + buid + "/" + floor; Path path = Paths.get(temp);
+		 * 
+		 * try { Files.createDirectories(path); } catch (IOException e1) { // TODO
+		 * Auto-generated catch block e1.printStackTrace(); }
+		 */
+		String filename = cache + buid + "/" + floor + "/" + "floorplan.png";
 
-		try {
-			Files.createDirectories(path);
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		String filename = "res/" + buid + "/" + floor + "/" + "floorplan.png";
-
-		
 		try {
 			File outputfile = new File(filename);
 			ImageIO.write(decodeToImage(response), "png", outputfile);
@@ -462,14 +377,12 @@ public class AnyplacePost {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
+
 		return response;
 	}
-	
-	
-	//Download the floor plan tiles in a zip file
-	
+
+	// Download the floor plan tiles in a zip file
+
 	public String floortiles(String access_token, String buid, String floor) {
 
 		RestClient client = new RestClient();
@@ -487,7 +400,7 @@ public class AnyplacePost {
 		if (statusCode == 200) {
 			String tiles_archive = obj.getString("tiles_archive");
 			byte[] zip = client.getFileWithGet(getHost(), tiles_archive);
-			String filename = "res/"+ buid + "/"+ floor + "/" + "floorPlanTiles.zip";
+			String filename = "res/" + buid + "/" + floor + "/" + "floorPlanTiles.zip";
 
 			try {
 				FileOutputStream outputStream = new FileOutputStream(filename);
@@ -506,13 +419,12 @@ public class AnyplacePost {
 		return response;
 	}
 
-	
-	//------------------------------------------------------------------------------------------------
-	
-	
-	//Radio map using all entries near the location
-	
-	public String radioByCoordinatesFloor(String access_token, String coordinates_lat, String coordinates_lon, String floor) {
+	// ------------------------------------------------------------------------------------------------
+
+	// Radio map using all entries near the location
+
+	public String radioByCoordinatesFloor(String access_token, String coordinates_lat, String coordinates_lon,
+			String floor) {
 
 		RestClient client = new RestClient();
 		setPath("/anyplace/position/radio_download_floor");
@@ -524,64 +436,57 @@ public class AnyplacePost {
 		params.put("mode", "foo");
 
 		String response = client.doPost(params, getHost(), getPath());
+		
+		
 
 		// NEED MORE INFORMATION
-		
+
 		/*
-		
-		JSONObject obj = new JSONObject(response);
-		int statusCode = obj.getInt("status_code");
-
-		if (statusCode == 200) {
-			
-			String temp = "res/" + coordinates_lat+"-"+coordinates_lon + "/" + floor;
-			Path path = Paths.get(temp);
-
-			try {
-				Files.createDirectories(path);
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-
-			String indoor_radiomap_parameters = "res/" + buid + "/" + floor + "/indoor_radiomap_parameters.txt";
-			String indoor_radiomap_mean = "res/" + buid + "/" + floor + "/indoor_radiomap_mean.txt";
-			String indoor_radiomap_weights = "res/" + buid + "/" + floor + "/indoor_radiomap_weights.txt";
-
-			try {
-				FileOutputStream outputStream = new FileOutputStream(indoor_radiomap_parameters);
-				outputStream.write(parameters);
-				outputStream.close();
-
-				outputStream = new FileOutputStream(indoor_radiomap_mean);
-				outputStream.write(mean);
-				outputStream.close();
-
-				outputStream = new FileOutputStream(indoor_radiomap_weights);
-				outputStream.write(weights);
-				outputStream.close();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-
-		}
-
-		else {
-			System.out.println("Bad response");
-		}
-	*/
+		 * 
+		 * JSONObject obj = new JSONObject(response); int statusCode =
+		 * obj.getInt("status_code");
+		 * 
+		 * if (statusCode == 200) {
+		 * 
+		 * String temp = "res/" + coordinates_lat+"-"+coordinates_lon + "/" + floor;
+		 * Path path = Paths.get(temp);
+		 * 
+		 * try { Files.createDirectories(path); } catch (IOException e1) { // TODO
+		 * Auto-generated catch block e1.printStackTrace(); }
+		 * 
+		 * String indoor_radiomap_parameters = "res/" + buid + "/" + floor +
+		 * "/indoor_radiomap_parameters.txt"; String indoor_radiomap_mean = "res/" +
+		 * buid + "/" + floor + "/indoor_radiomap_mean.txt"; String
+		 * indoor_radiomap_weights = "res/" + buid + "/" + floor +
+		 * "/indoor_radiomap_weights.txt";
+		 * 
+		 * try { FileOutputStream outputStream = new
+		 * FileOutputStream(indoor_radiomap_parameters); outputStream.write(parameters);
+		 * outputStream.close();
+		 * 
+		 * outputStream = new FileOutputStream(indoor_radiomap_mean);
+		 * outputStream.write(mean); outputStream.close();
+		 * 
+		 * outputStream = new FileOutputStream(indoor_radiomap_weights);
+		 * outputStream.write(weights); outputStream.close(); } catch (IOException e) {
+		 * // TODO Auto-generated catch block e.printStackTrace(); }
+		 * 
+		 * }
+		 * 
+		 * else { System.out.println("Bad response"); }
+		 */
 		return response;
 
 	}
-	
-	//Get a radio map in a floor with a range
-	public String radioByBuildingFloorRange(String access_token, String buid, String floor, String coordinates_lat, String coordinates_lon, String range) {
+
+	// Get a radio map in a floor with a range
+	public String radioByBuildingFloorRange(String buid, String floor, String coordinates_lat,
+			String coordinates_lon, String range) {
 
 		RestClient client = new RestClient();
 		setPath("/anyplace/position/radio_by_floor_bbox");
 		Map<String, String> params = new HashMap<String, String>();
-		//params.put("access_token", access_token);
+		// params.put("access_token", access_token);
 		params.put("buid", buid);
 		params.put("floor_number", floor);
 		params.put("coordinates_lat", coordinates_lat);
@@ -589,60 +494,49 @@ public class AnyplacePost {
 		params.put("range", range);
 
 		String response = client.doPost(params, getHost(), getPath());
-/*
-		JSONObject obj = new JSONObject(response);
-		int statusCode = obj.getInt("status_code");
-
-		if (statusCode == 200) {
-			String map_url_parameters = obj.getString("map_url_parameters");
-			byte[] parameters = client.getFileWithPost(getHost(), map_url_parameters);
-			String map_url_mean = obj.getString("map_url_mean");
-			byte[] mean = client.getFileWithPost(getHost(), map_url_mean);
-			String map_url_weights = obj.getString("map_url_weights");
-			byte[] weights = client.getFileWithPost(getHost(), map_url_weights);
-
-			String temp = "res/" + buid + "/" + floor;
-			Path path = Paths.get(temp);
-
-			try {
-				Files.createDirectories(path);
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-
-			String indoor_radiomap_parameters = "res/" + buid + "/" + floor + "/indoor_radiomap_parameters.txt";
-			String indoor_radiomap_mean = "res/" + buid + "/" + floor + "/indoor_radiomap_mean.txt";
-			String indoor_radiomap_weights = "res/" + buid + "/" + floor + "/indoor_radiomap_weights.txt";
-
-			try {
-				FileOutputStream outputStream = new FileOutputStream(indoor_radiomap_parameters);
-				outputStream.write(parameters);
-				outputStream.close();
-
-				outputStream = new FileOutputStream(indoor_radiomap_mean);
-				outputStream.write(mean);
-				outputStream.close();
-
-				outputStream = new FileOutputStream(indoor_radiomap_weights);
-				outputStream.write(weights);
-				outputStream.close();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-
-		}
-
-		else {
-			System.out.println("Bad response");
-		}
-*/
+		/*
+		 * JSONObject obj = new JSONObject(response); int statusCode =
+		 * obj.getInt("status_code");
+		 * 
+		 * if (statusCode == 200) { String map_url_parameters =
+		 * obj.getString("map_url_parameters"); byte[] parameters =
+		 * client.getFileWithPost(getHost(), map_url_parameters); String map_url_mean =
+		 * obj.getString("map_url_mean"); byte[] mean =
+		 * client.getFileWithPost(getHost(), map_url_mean); String map_url_weights =
+		 * obj.getString("map_url_weights"); byte[] weights =
+		 * client.getFileWithPost(getHost(), map_url_weights);
+		 * 
+		 * String temp = "res/" + buid + "/" + floor; Path path = Paths.get(temp);
+		 * 
+		 * try { Files.createDirectories(path); } catch (IOException e1) { // TODO
+		 * Auto-generated catch block e1.printStackTrace(); }
+		 * 
+		 * String indoor_radiomap_parameters = "res/" + buid + "/" + floor +
+		 * "/indoor_radiomap_parameters.txt"; String indoor_radiomap_mean = "res/" +
+		 * buid + "/" + floor + "/indoor_radiomap_mean.txt"; String
+		 * indoor_radiomap_weights = "res/" + buid + "/" + floor +
+		 * "/indoor_radiomap_weights.txt";
+		 * 
+		 * try { FileOutputStream outputStream = new
+		 * FileOutputStream(indoor_radiomap_parameters); outputStream.write(parameters);
+		 * outputStream.close();
+		 * 
+		 * outputStream = new FileOutputStream(indoor_radiomap_mean);
+		 * outputStream.write(mean); outputStream.close();
+		 * 
+		 * outputStream = new FileOutputStream(indoor_radiomap_weights);
+		 * outputStream.write(weights); outputStream.close(); } catch (IOException e) {
+		 * // TODO Auto-generated catch block e.printStackTrace(); }
+		 * 
+		 * }
+		 * 
+		 * else { System.out.println("Bad response"); }
+		 */
 		return response;
 
 	}
-	
-	//Radiomap using all the entries of an entire floor of a building
+
+	// Radiomap using all the entries of an entire floor of a building
 
 	public String radioByBuildingFloor(String access_token, String buid, String floor) {
 
@@ -666,19 +560,13 @@ public class AnyplacePost {
 			String map_url_weights = obj.getString("map_url_weights");
 			byte[] weights = client.getFileWithPost(getHost(), map_url_weights);
 
-			String temp = "res/" + buid + "/" + floor;
-			Path path = Paths.get(temp);
+			String temp = cache + buid + "/" + floor;
+			File dir = new File(temp);
+			dir.mkdirs();
 
-			try {
-				Files.createDirectories(path);
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-
-			String indoor_radiomap_parameters = "res/" + buid + "/" + floor + "/indoor_radiomap_parameters.txt";
-			String indoor_radiomap_mean = "res/" + buid + "/" + floor + "/indoor_radiomap_mean.txt";
-			String indoor_radiomap_weights = "res/" + buid + "/" + floor + "/indoor_radiomap_weights.txt";
+			String indoor_radiomap_parameters = "reso/" + buid + "/" + floor + "/indoor_radiomap_parameters.txt";
+			String indoor_radiomap_mean = "reso/" + buid + "/" + floor + "/indoor_radiomap_mean.txt";
+			String indoor_radiomap_weights = "reso/" + buid + "/" + floor + "/indoor_radiomap_weights.txt";
 
 			try {
 				FileOutputStream outputStream = new FileOutputStream(indoor_radiomap_parameters);
@@ -693,7 +581,6 @@ public class AnyplacePost {
 				outputStream.write(weights);
 				outputStream.close();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 
@@ -706,9 +593,8 @@ public class AnyplacePost {
 		return response;
 
 	}
-	
-	
-	//Get an estimation on the user's position based on the APs.
+
+	// Get an estimation on the user's position based on the APs.
 	public String estimatePosition(String buid, String floor, String aps[], String algorithm) {
 
 		RestClient client = new RestClient();
@@ -720,59 +606,58 @@ public class AnyplacePost {
 		String addr = "\\\"rss\\\"";
 		String addq = "\\\"";
 		String ap = "[";
-		for (int i =0; i<aps.length;i++) {
-			
+		for (int i = 0; i < aps.length; i++) {
+
 			JSONObject obj = new JSONObject(aps[i]);
 			String bssid = obj.getString("bssid");
 			int rss = obj.getInt("rss");
-			ap +="{"+ addb + ":" + addq + bssid + addq + "," + addr + ":" + rss +"}," ;
-						
-			
+			ap += "{" + addb + ":" + addq + bssid + addq + "," + addr + ":" + rss + "},";
+
 		}
 		ap = ap.substring(0, ap.length() - 1) + "]";
-	
-		//System.out.println(ap);
-		//ap = "[{\\\"bssid\\\":\\\"d4:d7:48:d8:28:b0\\\",\\\"rss\\\":-40},{\\\"bssid\\\":\\\"00:0e:38:7a:37:77\\\",\\\"rss\\\":-50}]";
-		//System.out.println(ap);
-		
+
 		params.put("APs", ap);
 		params.put("algorithm_choice", algorithm);
-		
 
-		
 		String response = client.doPost(params, getHost(), getPath());
-
-		String temp = "res/" + buid + "/" + floor;
-		Path path = Paths.get(temp);
-
-		try {
-			Files.createDirectories(path);
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		String filename = "res/" + buid + "/" + floor + "/" + "connections.json";
-
-		FileOutputStream outputStream;
-		try {
-			outputStream = new FileOutputStream(filename);
-			outputStream.write(response.getBytes());
-			outputStream.close();
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 
 		return response;
 	}
 
-	
+	// Get an estimation on the user's position based on the APs while offline
+	public String estimatePositionOffline(String buid, String floor, String aps[], String algorithm) {
+
+		ArrayList<LogRecord> list = new ArrayList<LogRecord>();
+
+		for (int i = 0; i < aps.length; i++) {
+
+			JSONObject obj = new JSONObject(aps[i]);
+			String bssid = obj.getString("bssid");
+			int rss = obj.getInt("rss");
+			list.add(new LogRecord(bssid, rss));
+		}
+
+		int al = Integer.parseInt(algorithm);
+		File file = new File(cache + buid + "/" + floor + "/indoor_radiomap_mean.txt");
+		RadioMap radio = null;
+		try {
+			radio = new RadioMap(file);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		String response = Algorithms.ProcessingAlgorithms(list, radio, al);
+
+		return response;
+	}
 
 	public String getHost() {
 		return host;
+	}
+
+	public String getCache() {
+		return cache;
 	}
 
 	public void setHost(String host) {
@@ -793,6 +678,10 @@ public class AnyplacePost {
 
 	public void setPort(String port) {
 		this.port = port;
+	}
+
+	public void setCache(String cache) {
+		this.cache = cache;
 	}
 
 }
