@@ -217,13 +217,14 @@ public class Tester {
 
 					BufferedReader br = new BufferedReader(new InputStreamReader(p.getInputStream()));
 					while ((s = br.readLine()) != null && counter <= 20) {
-						temp = "{\\\"bssid\\\":\\\"";
+						temp = "{\"bssid\":\"";
 						temp += s;
-						temp += "\\\",\\\"rss\\\":";
+						temp += "\",\"rss\":";
 						s = br.readLine();
 						temp += s;
 						temp += "}";
 						aps[counter++] = temp;
+						System.out.println(temp);
 					}
 					p.destroy();
 					br.close();
