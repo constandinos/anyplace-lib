@@ -564,9 +564,9 @@ public class AnyplacePost {
 			File dir = new File(temp);
 			dir.mkdirs();
 
-			String indoor_radiomap_parameters = "reso/" + buid + "/" + floor + "/indoor_radiomap_parameters.txt";
-			String indoor_radiomap_mean = "reso/" + buid + "/" + floor + "/indoor_radiomap_mean.txt";
-			String indoor_radiomap_weights = "reso/" + buid + "/" + floor + "/indoor_radiomap_weights.txt";
+			String indoor_radiomap_parameters = cache + buid + "/" + floor + "/indoor_radiomap_parameters.txt";
+			String indoor_radiomap_mean = cache + buid + "/" + floor + "/indoor_radiomap_mean.txt";
+			String indoor_radiomap_weights = cache + buid + "/" + floor + "/indoor_radiomap_weights.txt";
 
 			try {
 				FileOutputStream outputStream = new FileOutputStream(indoor_radiomap_parameters);
