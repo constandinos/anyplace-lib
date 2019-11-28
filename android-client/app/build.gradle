@@ -17,6 +17,10 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 }
 
 dependencies {
@@ -29,7 +33,7 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
     implementation files('libs\\anyplace-lib.jar')
-//    implementation files('libs\\json-20190722.jar')
-//    implementation files('libs\\okhttp-3.9.0.jar')
-//    implementation files('libs\\okio-1.13.0.jar')
+    implementation files('libs\\json-20190722.jar')
+    implementation files('libs\\okhttp-3.9.0.jar')
+    implementation files('libs\\okio-1.13.0.jar')
 }
