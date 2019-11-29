@@ -58,7 +58,7 @@ public class Tester {
 			System.out.println("-estimatePosOffline: Estimate the location of the user offline. Needs the radiomap file");
 
 		} else {
-			AnyplacePost client = new AnyplacePost("ap-dev.cs.ucy.ac.cy", "443");
+			AnyplacePost client = new AnyplacePost("ap-dev.cs.ucy.ac.cy", "443", "res/");
 
 			if (args[0].equals("-poiDetails")) {
 				if (args.length != 2) {

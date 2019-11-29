@@ -103,10 +103,10 @@
     <orderEntry type="library" scope="TEST" name="Gradle: androidx.test:core:1.1.0@aar" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: androidx.test:monitor:1.1.1@aar" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: androidx.test.espresso:espresso-idling-resource:3.1.1@aar" level="project" />
-    <orderEntry type="library" name="Gradle: __local_aars__:C.\Users\const\AndroidStudioProjects\AnyplaceApp\app\libs\anyplace-lib.jar:unspecified@jar" level="project" />
-    <orderEntry type="library" name="Gradle: __local_aars__:C.\Users\const\AndroidStudioProjects\AnyplaceApp\app\libs\json-20190722.jar:unspecified@jar" level="project" />
-    <orderEntry type="library" name="Gradle: __local_aars__:C.\Users\const\AndroidStudioProjects\AnyplaceApp\app\libs\okhttp-3.9.0.jar:unspecified@jar" level="project" />
-    <orderEntry type="library" name="Gradle: __local_aars__:C.\Users\const\AndroidStudioProjects\AnyplaceApp\app\libs\okio-1.13.0.jar:unspecified@jar" level="project" />
+    <orderEntry type="library" name="Gradle: __local_aars__:/Users/christos/Documents/GitHub/anyplace-lib/android-client/app/libs/json-20190722.jar:unspecified@jar" level="project" />
+    <orderEntry type="library" name="Gradle: __local_aars__:/Users/christos/Documents/GitHub/anyplace-lib/android-client/app/libs/anyplace-lib.jar:unspecified@jar" level="project" />
+    <orderEntry type="library" name="Gradle: __local_aars__:/Users/christos/Documents/GitHub/anyplace-lib/android-client/app/libs/okhttp-3.9.0.jar:unspecified@jar" level="project" />
+    <orderEntry type="library" name="Gradle: __local_aars__:/Users/christos/Documents/GitHub/anyplace-lib/android-client/app/libs/okio-1.13.0.jar:unspecified@jar" level="project" />
     <orderEntry type="library" name="Gradle: androidx.collection:collection:1.0.0@jar" level="project" />
     <orderEntry type="library" name="Gradle: androidx.arch.core:core-common:2.0.0@jar" level="project" />
     <orderEntry type="library" name="Gradle: androidx.lifecycle:lifecycle-common:2.0.0@jar" level="project" />

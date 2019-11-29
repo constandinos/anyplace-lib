@@ -21,10 +21,11 @@ public class AnyplacePost {
 	private String host;
 	private String path;
 	private String port;
-	private String cache = "res/";
+	private String cache ;
 
-	public AnyplacePost(String host, String port) {
+	public AnyplacePost(String host, String port, String cache) {
 
+		setCache(cache);
 		setHost(host);
 		setPort(port);
 
@@ -410,6 +411,21 @@ public class AnyplacePost {
 			String indoor_radiomap_mean = cache + buid + "/" + floor + "/indoor_radiomap_mean.txt";
 			String indoor_radiomap_weights = cache + buid + "/" + floor + "/indoor_radiomap_weights.txt";
 
+			File f1 = new File(indoor_radiomap_mean);
+			File f2 = new File(indoor_radiomap_parameters);
+			File f3 = new File(indoor_radiomap_weights);
+
+			try {
+				f1.createNewFile();
+				f2.createNewFile();
+				f3.createNewFile();
+
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			
+			
 			try {
 				FileOutputStream outputStream = new FileOutputStream(indoor_radiomap_parameters);
 				outputStream.write(parameters);
