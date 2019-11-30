@@ -44,16 +44,12 @@ public class Algorithms {
 
 	final static String K = "4";
 
-	
 	/**
 	 * 
-	 * @param latestScanList
-	 *            the current scan list of APs
-	 * @param RM
-	 *            the constructed Radio Map
+	 * @param latestScanList   the current scan list of APs
+	 * @param RM               the constructed Radio Map
 	 * 
-	 * @param algorithm_choice
-	 *            choice of several algorithms
+	 * @param algorithm_choice choice of several algorithms
 	 * 
 	 * @return the location of user
 	 */
@@ -113,22 +109,20 @@ public class Algorithms {
 	}
 
 	/**
-	 * Calculates user location based on Weighted/Not Weighted K Nearest
-	 * Neighbor (KNN) Algorithm
+	 * Calculates user location based on Weighted/Not Weighted K Nearest Neighbor
+	 * (KNN) Algorithm
 	 * 
-	 * @param RM
-	 *            The radio map structure
+	 * @param RM                  The radio map structure
 	 * 
-	 * @param Observed_RSS_Values
-	 *            RSS values currently observed
+	 * @param Observed_RSS_Values RSS values currently observed
 	 * @param parameter
 	 * 
-	 * @param isWeighted
-	 *            To be weighted or not
+	 * @param isWeighted          To be weighted or not
 	 * 
 	 * @return The estimated user location
 	 */
-	private static String KNN_WKNN_Algorithm(RadioMap RM, ArrayList<String> Observed_RSS_Values, String parameter, boolean isWeighted) {
+	private static String KNN_WKNN_Algorithm(RadioMap RM, ArrayList<String> Observed_RSS_Values, String parameter,
+			boolean isWeighted) {
 
 		ArrayList<String> RSS_Values;
 		float curResult = 0;
@@ -173,23 +167,20 @@ public class Algorithms {
 	}
 
 	/**
-	 * Calculates user location based on Probabilistic Maximum A Posteriori
-	 * (MAP) Algorithm or Probabilistic Minimum Mean Square Error (MMSE)
-	 * Algorithm
+	 * Calculates user location based on Probabilistic Maximum A Posteriori (MAP)
+	 * Algorithm or Probabilistic Minimum Mean Square Error (MMSE) Algorithm
 	 * 
-	 * @param RM
-	 *            The radio map structure
+	 * @param RM                  The radio map structure
 	 * 
-	 * @param Observed_RSS_Values
-	 *            RSS values currently observed
+	 * @param Observed_RSS_Values RSS values currently observed
 	 * @param parameter
 	 * 
-	 * @param isWeighted
-	 *            To be weighted or not
+	 * @param isWeighted          To be weighted or not
 	 * 
 	 * @return The estimated user location
 	 */
-	private static String MAP_MMSE_Algorithm(RadioMap RM, ArrayList<String> Observed_RSS_Values, String parameter, boolean isWeighted) {
+	private static String MAP_MMSE_Algorithm(RadioMap RM, ArrayList<String> Observed_RSS_Values, String parameter,
+			boolean isWeighted) {
 
 		ArrayList<String> RSS_Values;
 		double curResult = 0.0d;
@@ -228,13 +219,11 @@ public class Algorithms {
 	}
 
 	/**
-	 * Calculates the Euclidean distance between the currently observed RSS
-	 * values and the RSS values for a specific location.
+	 * Calculates the Euclidean distance between the currently observed RSS values
+	 * and the RSS values for a specific location.
 	 * 
-	 * @param l1
-	 *            RSS values of a location in radiomap
-	 * @param l2
-	 *            RSS values currently observed
+	 * @param l1 RSS values of a location in radiomap
+	 * @param l2 RSS values currently observed
 	 * 
 	 * @return The Euclidean distance, or MIN_VALUE for error
 	 */
@@ -268,13 +257,11 @@ public class Algorithms {
 	}
 
 	/**
-	 * Calculates the Probability of the user being in the currently observed
-	 * RSS values and the RSS values for a specific location.
+	 * Calculates the Probability of the user being in the currently observed RSS
+	 * values and the RSS values for a specific location.
 	 * 
-	 * @param l1
-	 *            RSS values of a location in radiomap
-	 * @param l2
-	 *            RSS values currently observed
+	 * @param l1 RSS values of a location in radiomap
+	 * @param l2 RSS values currently observed
 	 * 
 	 * @return The Probability for this location, or MIN_VALUE for error
 	 */
@@ -306,7 +293,7 @@ public class Algorithms {
 			temp /= (double) (sGreek * sGreek);
 			temp = (double) Math.exp(temp);
 
-			//Do not allow zero instead stop on small possibility
+			// Do not allow zero instead stop on small possibility
 			if (finalResult * temp != 0)
 				finalResult = finalResult * temp;
 		}
@@ -314,13 +301,10 @@ public class Algorithms {
 	}
 
 	/**
-	 * Calculates the Average of the K locations that have the shortest
-	 * distances D
+	 * Calculates the Average of the K locations that have the shortest distances D
 	 * 
-	 * @param LocDistance_Results_List
-	 *            Locations-Distances pairs sorted by distance
-	 * @param K
-	 *            The number of locations used
+	 * @param LocDistance_Results_List Locations-Distances pairs sorted by distance
+	 * @param K                        The number of locations used
 	 * @return The estimated user location, or null for error
 	 */
 	private static String calculateAverageKDistanceLocations(ArrayList<LocDistance> LocDistance_Results_List, int K) {
@@ -360,13 +344,12 @@ public class Algorithms {
 	 * Calculates the Weighted Average of the K locations that have the shortest
 	 * distances D
 	 * 
-	 * @param LocDistance_Results_List
-	 *            Locations-Distances pairs sorted by distance
-	 * @param K
-	 *            The number of locations used
+	 * @param LocDistance_Results_List Locations-Distances pairs sorted by distance
+	 * @param K                        The number of locations used
 	 * @return The estimated user location, or null for error
 	 */
-	public static String calculateWeightedAverageKDistanceLocations(ArrayList<LocDistance> LocDistance_Results_List, int K) {
+	public static String calculateWeightedAverageKDistanceLocations(ArrayList<LocDistance> LocDistance_Results_List,
+			int K) {
 
 		double LocationWeight = 0.0f;
 		double sumWeights = 0.0f;
@@ -407,11 +390,10 @@ public class Algorithms {
 	}
 
 	/**
-	 * Calculates the Weighted Average over ALL locations where the weights are
-	 * the Normalized Probabilities
+	 * Calculates the Weighted Average over ALL locations where the weights are the
+	 * Normalized Probabilities
 	 * 
-	 * @param LocDistance_Results_List
-	 *            Locations-Probability pairs
+	 * @param LocDistance_Results_List Locations-Probability pairs
 	 * 
 	 * @return The estimated user location, or null for error
 	 */
@@ -449,7 +431,6 @@ public class Algorithms {
 		return WeightedSumX + " " + WeightedSumY;
 
 	}
-
 
 	private static String readParameter(RadioMap RM, int algorithm_choice) {
 

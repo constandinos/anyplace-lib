@@ -54,7 +54,7 @@ public class LogRecord {
 	public int getRss() {
 		return rss;
 	}
-	
+
 	public String toString() {
 		String str = new String();
 		str = String.valueOf(bssid) + " " + String.valueOf(rss) + "\n";

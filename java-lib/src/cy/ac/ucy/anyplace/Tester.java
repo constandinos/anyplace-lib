@@ -1,3 +1,41 @@
+/*
+ * AnyPlace: A free and open Indoor Navigation Service with superb accuracy!
+ *
+ * Anyplace is a first-of-a-kind indoor information service offering GPS-less
+ * localization, navigation and search inside buildings using ordinary smartphones.
+ *
+ * Author(s): Marcos Antonios Charalambous, Constandinos Demetriou, Christakis Achilleos
+ *
+ * Supervisor: Demetrios Zeinalipour-Yazti
+ *
+ * Co-supervisor: Paschalis Mpeis
+ *
+ * URL: http://anyplace.cs.ucy.ac.cy
+ * Contact: anyplace@cs.ucy.ac.cy
+ *
+ * Copyright (c) 2019, Data Management Systems Lab (DMSL), University of Cyprus.
+ * All rights reserved.
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of
+ * this software and associated documentation files (the "Software"), to deal in the
+ * Software without restriction, including without limitation the rights to use, copy,
+ * modify, merge, publish, distribute, sublicense, and/or sell copies of the Software,
+ * and to permit persons to whom the Software is furnished to do so, subject to the
+ * following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+ * OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+ * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+ * DEALINGS IN THE SOFTWARE.
+ *
+ */
+
 package cy.ac.ucy.anyplace;
 
 import java.io.BufferedReader;
@@ -211,16 +249,33 @@ public class Tester {
 						response = client.radioByBuildingFloorRange(buid, floor, coordinates_lat, coordinates_lon, range);
 						System.out.println(response + "\n"); /* .substring(0, 100) */
 			} else if (args[0].equals("-estimatePosition")) {
-				if (args.length >= 5) {
-					System.out.println("Usage: -estimatePosition <buid> <floor> <algorithm>");
+				if (args.length != 5) {
+					System.out.println("Usage: -estimatePosition <operating_system> <buid> <floor> <algorithm>");
 					System.exit(0);
 				}
-				String buid = args[1];
-				String floor = args[2];
-				String algorithm = args[3];
-
-				String cmd[] = { "/bin/sh", "-c",
-						"sudo iwlist wlo1 scan | awk  '/Address/ {print $5}; /level/ {print $3}' |  cut -d\"=\" -f2 " };
+				String operating_system = args[1];
+				String buid = args[2];
+				String floor = args[3];
+				String algorithm = args[4];
+				
+				String cmd[] = new String[3];
+				if (operating_system.equals("linux")) {
+					cmd[0] = "/bin/sh";
+					cmd[1] = "-c";
+					cmd[2] = "sudo iwlist wlo1 scan | awk  '/Address/ {print $5}; /level/ {print $3}' |  cut -d\"=\" -f2 ";
+				}
+				else if (operating_system.equals("mac")) {
+					/*
+					Ôo be completed by Xristakis
+					cmd[0] =
+					cmd[1] = 
+					cmd[2] = 
+					*/
+				}
+				else {
+					System.out.println("Only linux and mac are the available operating systems");
+					System.exit(0);
+				}
 
 				String aps[] = new String[200];
 				Process p;
@@ -250,16 +305,33 @@ public class Tester {
 				response = client.estimatePosition(buid, floor, aps, algorithm);
 				System.out.println(response + "\n"); /* .substring(0, 100) */
 			} else if (args[0].equals("-estimatePosOffline")) {
-				if (args.length >= 5) {
-					System.out.println("Usage: -estimatePosOffline <buid> <floor> <algorithm>");
+				if (args.length != 5) {
+					System.out.println("Usage: -estimatePosOffline <operating_system> <buid> <floor> <algorithm>");
 					System.exit(0);
 				}
-				String buid = args[1];
-				String floor = args[2];
-				String algorithm = args[3];
-
-				String cmd[] = { "/bin/sh", "-c",
-						"sudo iwlist wlo1 scan | awk  '/Address/ {print $5}; /level/ {print $3}' |  cut -d\"=\" -f2 " };
+				String operating_system = args[1];
+				String buid = args[2];
+				String floor = args[3];
+				String algorithm = args[4];
+				
+				String cmd[] = new String[3];
+				if (operating_system.equals("linux")) {
+					cmd[0] = "/bin/sh";
+					cmd[1] = "-c";
+					cmd[2] = "sudo iwlist wlo1 scan | awk  '/Address/ {print $5}; /level/ {print $3}' |  cut -d\"=\" -f2 ";
+				}
+				else if (operating_system.equals("mac")) {
+					/*
+					Ôo be completed by Xristakis
+					cmd[0] =
+					cmd[1] = 
+					cmd[2] = 
+					*/
+				}
+				else {
+					System.out.println("Only linux and mac are the available operating systems");
+					System.exit(0);
+				}
 
 				String aps[] = new String[200];
 				Process p;

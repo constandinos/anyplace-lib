@@ -1,3 +1,41 @@
+/*
+ * AnyPlace: A free and open Indoor Navigation Service with superb accuracy!
+ *
+ * Anyplace is a first-of-a-kind indoor information service offering GPS-less
+ * localization, navigation and search inside buildings using ordinary smartphones.
+ *
+ * Author(s): Christakis Achilleos, Constandinos Demetriou, Marcos Antonios Charalambous
+ *
+ * Supervisor: Demetrios Zeinalipour-Yazti
+ *
+ * Co-supervisor: Paschalis Mpeis
+ *
+ * URL: http://anyplace.cs.ucy.ac.cy
+ * Contact: anyplace@cs.ucy.ac.cy
+ *
+ * Copyright (c) 2019, Data Management Systems Lab (DMSL), University of Cyprus.
+ * All rights reserved.
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of
+ * this software and associated documentation files (the "Software"), to deal in the
+ * Software without restriction, including without limitation the rights to use, copy,
+ * modify, merge, publish, distribute, sublicense, and/or sell copies of the Software,
+ * and to permit persons to whom the Software is furnished to do so, subject to the
+ * following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+ * OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+ * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+ * DEALINGS IN THE SOFTWARE.
+ *
+ */
+
 package cy.ac.ucy.anyplace;
 
 import java.awt.image.BufferedImage;
@@ -13,7 +51,6 @@ import java.util.Map;
 
 import javax.imageio.ImageIO;
 
-
 import org.json.JSONObject;
 
 public class AnyplacePost {
@@ -21,14 +58,12 @@ public class AnyplacePost {
 	private String host;
 	private String path;
 	private String port;
-	private String cache ;
+	private String cache;
 
 	public AnyplacePost(String host, String port, String cache) {
-
 		setCache(cache);
 		setHost(host);
 		setPort(port);
-
 	}
 
 	private static BufferedImage decodeToImage(String imageString) {
@@ -52,7 +87,6 @@ public class AnyplacePost {
 	// POI Details
 
 	public String poiDetails(String access_token, String pois) {
-
 		RestClient client = new RestClient();
 		setPath("/anyplace/navigation/pois/id");
 		Map<String, String> params = new HashMap<String, String>();
@@ -93,7 +127,7 @@ public class AnyplacePost {
 		int statusCode = obj.getInt("status_code");
 
 		if (statusCode == 200) {
-		
+
 		}
 
 		else {
@@ -121,7 +155,7 @@ public class AnyplacePost {
 		int statusCode = obj.getInt("status_code");
 
 		if (statusCode == 200) {
-	
+
 		}
 
 		else {
@@ -219,7 +253,7 @@ public class AnyplacePost {
 		params.put("buid", buid);
 
 		String response = client.doPost(params, getHost(), getPath());
-		
+
 		return response;
 	}
 
@@ -233,7 +267,7 @@ public class AnyplacePost {
 		params.put("floor_number", floor);
 
 		String response = client.doPost(params, getHost(), getPath());
-	
+
 		return response;
 	}
 
@@ -262,7 +296,7 @@ public class AnyplacePost {
 		setPath("/anyplace/mapping/radio/heatmap_building_floor");
 
 		String response = client.doPost(params, getHost(), getPath());
-	
+
 		return response;
 
 	}
@@ -281,7 +315,7 @@ public class AnyplacePost {
 		params.put("floor", floor);
 
 		String response = client.doPost(params, getHost(), getPath());
-	
+
 		String filename = cache + buid + "/" + floor + "/" + "floorplan.png";
 
 		try {
@@ -353,15 +387,14 @@ public class AnyplacePost {
 		params.put("mode", "foo");
 
 		String response = client.doPost(params, getHost(), getPath());
-		
-	
+
 		return response;
 
 	}
 
 	// Get a radio map in a floor with a range
-	public String radioByBuildingFloorRange(String buid, String floor, String coordinates_lat,
-			String coordinates_lon, String range) {
+	public String radioByBuildingFloorRange(String buid, String floor, String coordinates_lat, String coordinates_lon,
+			String range) {
 
 		RestClient client = new RestClient();
 		setPath("/anyplace/position/radio_by_floor_bbox");
@@ -374,7 +407,7 @@ public class AnyplacePost {
 		params.put("range", range);
 
 		String response = client.doPost(params, getHost(), getPath());
-	
+
 		return response;
 
 	}
@@ -424,8 +457,7 @@ public class AnyplacePost {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
-			
-			
+
 			try {
 				FileOutputStream outputStream = new FileOutputStream(indoor_radiomap_parameters);
 				outputStream.write(parameters);

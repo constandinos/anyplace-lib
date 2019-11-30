@@ -64,7 +64,7 @@ public class RadioMap {
 	 * Getter of MAC Address list in file order
 	 * 
 	 * @return the list of MAC Addresses
-	 * */
+	 */
 	public ArrayList<String> getMacAdressList() {
 		return MacAdressList;
 	}
@@ -73,7 +73,7 @@ public class RadioMap {
 	 * Getter of HashMap Location-RSS Values list in no particular order
 	 * 
 	 * @return the HashMap Location-RSS Values
-	 * */
+	 */
 	public HashMap<String, ArrayList<String>> getLocationRSS_HashMap() {
 		return LocationRSS_HashMap;
 	}
@@ -82,7 +82,7 @@ public class RadioMap {
 	 * Getter of Location list in file order
 	 * 
 	 * @return the Location list
-	 * */
+	 */
 	public ArrayList<String> getOrderList() {
 		return OrderList;
 	}
@@ -91,7 +91,7 @@ public class RadioMap {
 	 * Getter of radio map mean filename
 	 * 
 	 * @return the filename of radiomap mean used
-	 * */
+	 */
 	public File getRadiomapMean_File() {
 		return this.RadiomapMean_File;
 	}
@@ -103,11 +103,10 @@ public class RadioMap {
 	/**
 	 * Construct a radio map
 	 * 
-	 * @param inFile
-	 *            the radio map file to read
+	 * @param inFile the radio map file to read
 	 * 
 	 * @return true if radio map constructed successfully, otherwise false
-	 * */
+	 */
 	private boolean ConstructRadioMap(File inFile) {
 
 		if (!inFile.exists() || !inFile.canRead()) {
