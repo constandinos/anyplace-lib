@@ -750,7 +750,8 @@ id beginning
 id blocking
 id bottom
 id button
-id buttonOpenMaps
+id buttonOfflineLocalization
+id buttonOnlineLocalization
 id buttonPanel
 id cancel_action
 id center

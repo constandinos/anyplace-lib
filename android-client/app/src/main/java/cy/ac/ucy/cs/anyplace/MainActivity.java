@@ -1,10 +1,50 @@
+/*
+ * AnyPlace: A free and open Indoor Navigation Service with superb accuracy!
+ *
+ * Anyplace is a first-of-a-kind indoor information service offering GPS-less
+ * localization, navigation and search inside buildings using ordinary smartphones.
+ *
+ * Author(s): Constandinos Demetriou, Christakis Achilleos, Marcos Antonios Charalambous
+ *
+ * Supervisor: Demetrios Zeinalipour-Yazti
+ *
+ * Co-supervisor: Paschalis Mpeis
+ *
+ * URL: http://anyplace.cs.ucy.ac.cy
+ * Contact: anyplace@cs.ucy.ac.cy
+ *
+ * Copyright (c) 2019, Data Management Systems Lab (DMSL), University of Cyprus.
+ * All rights reserved.
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of
+ * this software and associated documentation files (the "Software"), to deal in the
+ * Software without restriction, including without limitation the rights to use, copy,
+ * modify, merge, publish, distribute, sublicense, and/or sell copies of the Software,
+ * and to permit persons to whom the Software is furnished to do so, subject to the
+ * following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+ * OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+ * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+ * DEALINGS IN THE SOFTWARE.
+ *
+ */
+
 package cy.ac.ucy.cs.anyplace;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.app.ProgressDialog;
 import android.content.Intent;
-import android.net.Uri;
 import android.net.wifi.WifiManager;
-import android.os.Environment;
+import android.os.AsyncTask;
+import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.widget.Button;
 import android.os.Bundle;
@@ -17,127 +57,96 @@ import android.Manifest;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.os.Build;
+
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+
 import cy.ac.ucy.anyplace.AnyplacePost;
 
 public class MainActivity extends AppCompatActivity {
-    private static final String TAG = "DEBUG";
+
+    private final static String build = "username_1373876832005"; //building id
+    private final static String floor = "-1"; //floor number
+    private final static String access_token = "eyJhbGciOiJSUzI1NiIsImtpZCI6ImRlZThkM2RhZmJmMzEyNjJhYjkzNDdkNjIwMzgzMjE3YWZkOTZjYTMiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJhY2NvdW50cy5nb29nbGUuY29tIiwiYXpwIjoiNTg3NTAwNzIzOTcxLXNpOHM0cXFhdDl2NWVmZ2VtbmViaWhwaTNxZTlvbmxwLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwiYXVkIjoiNTg3NTAwNzIzOTcxLXNpOHM0cXFhdDl2NWVmZ2VtbmViaWhwaTNxZTlvbmxwLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwic3ViIjoiMTE2NDYzMjU4ODQxMDgzNTM5NzI5IiwiZW1haWwiOiJjb25zdGFuZGlub3NkZW1ldHJpb3VAZ21haWwuY29tIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsImF0X2hhc2giOiI3c3BmSnhlUFpaNDRMSVlKaG40c0V3IiwibmFtZSI6IkNvbnN0YW5kaW5vcyBEZW1ldHJpb3UiLCJwaWN0dXJlIjoiaHR0cHM6Ly9saDMuZ29vZ2xldXNlcmNvbnRlbnQuY29tL2EtL0FBdUU3bUJiR0RPaDdTTUNiNzVtVTlXU0dGbHlGQlFLVVdZd0ZMU3lvSkJGPXM5Ni1jIiwiZ2l2ZW5fbmFtZSI6IkNvbnN0YW5kaW5vcyIsImZhbWlseV9uYW1lIjoiRGVtZXRyaW91IiwibG9jYWxlIjoiZWwiLCJpYXQiOjE1NzUxMjA5NDEsImV4cCI6MTU3NTEyNDU0MSwianRpIjoiZDRkMTYzYzVhZWJjODhkZWViZTU4MTA5NzEyNDI1NjQzNjMyNDNhNSJ9.h9x0O7iYLJbRfIzSyCD-aq6XqBrE3h3h5tSKxwMCzKy5Lywsu9aTFb-L9IjHnEzkJvdB-PLQgoJ_iPAeDfHs1RcN8JvaOzoGQo5Djv5V_k81QTN_bFHwIIbwaEAhQIpG9Vpcud-gtaH1TvqzUFSOkece_f6prmJoSDLZWswMFHMAna7Qcb3rACjNeYSMVKRwo19eHxoZPKpYH2lqPD0-oh_Xg8Vyf8mg_FknmFz5RcoI1324Oo-i_uTykV1mfZq7r26jfB_68SQO0D3a52U-Jdx_KGqX8qCWcqVYmG-zMjD3WUJOl9wFSjBh01ypthk3M-i3OetRNwM8C6nv2_twTw"; //api key
+    private final static String algorithm = "1"; //algorithm KNN_WKNN
+
+    private static final String TAG = "DEBUG"; //debug tag
+
     private ListView wifiList;
     private WifiManager wifiManager;
-    private final int MY_PERMISSIONS_ACCESS_COARSE_LOCATION = 1;
     private WifiReceiver receiverWifi;
-    private final static String buid = "username_1373876832005";
-    private final static String floor = "0";
-    private final static String algorithm ="1";
+    private final int MY_PERMISSIONS_ACCESS_COARSE_LOCATION = 1;
 
+    private TextView tvOutput = null;
+    private ProgressDialog progressDialog;
+
+    /**
+     * @param savedInstanceState
+     */
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_main);
 
+        //Collect fingerprints
         wifiManager = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
-
         if (!wifiManager.isWifiEnabled()) {
             Toast.makeText(getApplicationContext(), "Turning WiFi ON...", Toast.LENGTH_LONG).show();
             wifiManager.setWifiEnabled(true);
         }
 
+        //Button - API Call
         final Button button = findViewById(R.id.button);
-        final TextView tvOutput = findViewById(R.id.tvOutput);
+        //Button - Online Localization
+        final Button buttonOnlineLocalization = findViewById(R.id.buttonOnlineLocalization);
+        //Button - Offline Localization
+        final Button buttonOfflineLocalization = findViewById(R.id.buttonOfflineLocalization);
+        //Results - Text view
+        tvOutput = findViewById(R.id.tvOutput);
+        tvOutput.setMovementMethod(new ScrollingMovementMethod());
 
-        final Button buttonOpenMaps = findViewById(R.id.buttonOpenMaps);
+        //Button - API Call - On click
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                new Thread(new Runnable(){
-                    @Override
-                    public void run() {
-                        try {
-                            String str = "username_1373876832005";
-                            String response;
-                            String access_token = "eyJhbGciOiJSUzI1NiIsImtpZCI6IjhjNThlMTM4NjE0YmQ1ODc0MjE3MmJkNTA4MGQxOTdkMmIyZGQyZjMiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJhY2NvdW50cy5nb29nbGUuY29tIiwiYXpwIjoiNTg3NTAwNzIzOTcxLXNpOHM0cXFhdDl2NWVmZ2VtbmViaWhwaTNxZTlvbmxwLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwiYXVkIjoiNTg3NTAwNzIzOTcxLXNpOHM0cXFhdDl2NWVmZ2VtbmViaWhwaTNxZTlvbmxwLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwic3ViIjoiMTA0NDQxMzA0OTI3MzE2MzM5NDM2IiwiZW1haWwiOiJhY2hpbC5jaHJpc3Rvc0BnbWFpbC5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiYXRfaGFzaCI6InpSVUJ4cVBjT29xejB0cVpkNEg1WnciLCJuYW1lIjoiY2hyaXN0b3MgYWNoaWxsZW9zIiwicGljdHVyZSI6Imh0dHBzOi8vbGgzLmdvb2dsZXVzZXJjb250ZW50LmNvbS8tVTVqVzlpRk9kRVEvQUFBQUFBQUFBQUkvQUFBQUFBQUFBQUEvQUNIaTNyYzZfTEEzLWV2dGFJbXVTdDU0cFJRdmd1T1BOQS9zOTYtYy9waG90by5qcGciLCJnaXZlbl9uYW1lIjoiY2hyaXN0b3MiLCJmYW1pbHlfbmFtZSI6ImFjaGlsbGVvcyIsImxvY2FsZSI6ImVuIiwiaWF0IjoxNTcwMDIzNDE2LCJleHAiOjE1NzAwMjcwMTYsImp0aSI6ImMxMWY2YzIwMjgwZjc1YmMxZjE4NDMzM2QyZGM5NWY4MTYxYTZkNWUifQ.W_8IsTty5D7UdbcHkjrHyhNkEOyFc1r8fluvnd3kpV5wmK9Z4Tb0zv-W9DOr6mOGZUbaLvHR0Hncbqgec_iN9YNV281O3NRd-XERsn-Gf3oZ2z0Nbm5-_4NRg-WkLER4Ouo-upCd9TvXZwWqK0NNZm1Ka8N_JCzU0vb29T7lASZAZQ5POLtg3Z7PoAIk-h1HoO8Wb8acb-fkVaoLd-WR4sEhC93mxEaKe3DycXT0QtaO27GAYypz6HfWM3PsyPHio9nGr-GSt7ZNZuJYjnzqyRhXnx-H2dRggWbS6EAREWmBH2sdWe7fzMBFt_GNCl9q3yGVJQht5IOTmPDG9gixsw";
-                            String aps[] = { "{\"bssid\":\"d4:d7:48:d8:28:b0\",\"rss\":-40}", "{\"bssid\":\"00:0e:38:7a:37:77\",\"rss\":-50}"};
-                            //String root = Environment.getExternalStorageDirectory().toString();//get external storage
-                            String cache = String.valueOf(getApplicationContext().getFilesDir());
-
-                            //(MyApplication)getApplication()).anyplace =  new AnyplacePost("ap.cs.ucy.ac.cy", "443");
-                           AnyplacePost client = new AnyplacePost("ap-dev.cs.ucy.ac.cy", "443", cache+"/");
-                            //client.setCacheDir(getApplicationContext().getFilesDir()); // save where to store stuff..
-                           response = client.radioByBuildingFloor(access_token,str, "0");
-
-                           response = client.estimatePositionOffline(str, "0" , aps , "1");
-                            tvOutput.setText(response);
-
-
-                            //new code
-
-
-
-
-                        }
-                        catch (Exception ex) {
-                            ex.printStackTrace();
-                        }
-                    }
-                }).start();
-
+                try {
+                    AsyncTaskAPICall asyncTask = new AsyncTaskAPICall();
+                    asyncTask.execute();
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
             }
         });
 
-        buttonOpenMaps.setOnClickListener(new View.OnClickListener() {
+        //Button - Online Localization - On click
+        buttonOnlineLocalization.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new Thread(new Runnable(){
-                    @Override
-                    public void run() {
-                        try {
+                try {
+                    AsyncTaskOnlineLocal asyncTask = new AsyncTaskOnlineLocal();
+                    asyncTask.execute();
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            }
+        });
 
-                            //REAL CODE
+        //Button - Offline Localization - On click
+        buttonOfflineLocalization.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    AsyncTaskOfflineLocal asyncTask = new AsyncTaskOfflineLocal();
+                    asyncTask.execute();
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
 
-                            while (receiverWifi.isReady()==false){
-                                //wait
-                            }
-                            String[] fingerprints = receiverWifi.getFingerprints();
-                            String cache = String.valueOf(getApplicationContext().getFilesDir());
-
-                            AnyplacePost client = new AnyplacePost("ap-dev.cs.ucy.ac.cy", "443", cache+"/");
-                            String responseString = client.estimatePosition(buid, floor, fingerprints, algorithm);
-                            String[] response = responseString.split("[,:]");
-                            for (int i=0; i<response.length; i++) {
-                                if (response[i].equals("\"lat\"")) {
-                                    MapsActivity.lan = Double.parseDouble(response[i+1].replace('"', ' '));
-                                }
-                                if (response[i].equals("\"long\"")) {
-                                    MapsActivity.lon = Double.parseDouble(response[i+1].replace('"', ' '));
-                                }
-                            }
-
-                            Intent myIntent = new Intent(MainActivity.this, MapsActivity.class);
-                            MainActivity.this.startActivity(myIntent);
-
-/*
-                            double latitude =  35.144413;
-                            double longitude = 33.411476;
-
-                            MapsActivity.lan = latitude;
-                            MapsActivity.lon = longitude;
-
-                            Intent myIntent = new Intent(MainActivity.this, MapsActivity.class);
-                            MainActivity.this.startActivity(myIntent);
-*/
-
-                        }
-                        catch (Exception ex) {
-                            ex.printStackTrace();
-                        }
-                    }
-                }).start();
             }
         });
     }
 
-    @Override
+    //Wifi scanning
+
     protected void onPostResume() {
         super.onPostResume();
         receiverWifi = new WifiReceiver(wifiManager, wifiList);
@@ -147,33 +156,32 @@ public class MainActivity extends AppCompatActivity {
         getWifi();
 
     }
+
     private void getWifi() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            Toast.makeText(MainActivity.this, "version> = marshmallow", Toast.LENGTH_SHORT).show();
             if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                 Toast.makeText(MainActivity.this, "location turned off", Toast.LENGTH_SHORT).show();
                 ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, MY_PERMISSIONS_ACCESS_COARSE_LOCATION);
             } else {
-                Toast.makeText(MainActivity.this, "location turned on", Toast.LENGTH_SHORT).show();
                 wifiManager.startScan();
             }
         } else {
-            Toast.makeText(MainActivity.this, "scanning", Toast.LENGTH_SHORT).show();
             wifiManager.startScan();
         }
     }
+
     @Override
     protected void onPause() {
         super.onPause();
         unregisterReceiver(receiverWifi);
     }
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         switch (requestCode) {
             case MY_PERMISSIONS_ACCESS_COARSE_LOCATION:
-                if (grantResults.length>0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    Toast.makeText(MainActivity.this, "permission granted", Toast.LENGTH_SHORT).show();
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     wifiManager.startScan();
                 } else {
                     Toast.makeText(MainActivity.this, "permission not granted", Toast.LENGTH_SHORT).show();
@@ -182,4 +190,171 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
     }
+
+    /**
+     * API Call - Async Task
+     */
+    public class AsyncTaskAPICall extends AsyncTask<String, String, String> {
+        @Override
+        protected void onPreExecute() {
+            tvOutput.setText(" ");
+            super.onPreExecute();
+            progressDialog = new ProgressDialog(MainActivity.this);
+            progressDialog.setMessage("Please wait...");
+            progressDialog.setCancelable(false);
+            progressDialog.show();
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+            //(MyApplication)getApplication()).anyplace =  new AnyplacePost("ap.cs.ucy.ac.cy", "443");
+            String cache = String.valueOf(getApplicationContext().getFilesDir());
+            Log.d(TAG, "cache path = " + cache + "/");
+            AnyplacePost server = new AnyplacePost("ap-dev.cs.ucy.ac.cy", "443", cache + "/");
+            //client.setCacheDir(getApplicationContext().getFilesDir()); // save where to store stuff..
+            String response = server.allBuildingFloors(build);
+            Log.d(TAG, response);
+            return response;
+        }
+
+        @Override
+        protected void onPostExecute(String response) {
+            progressDialog.hide();
+            tvOutput.setText(response);
+        }
+    }//end class ApiCallAsyncTasks
+
+    /**
+     * Online Localization - Async Task
+     */
+    public class AsyncTaskOnlineLocal extends AsyncTask<String, String, String> {
+        @Override
+        protected void onPreExecute() {
+            tvOutput.setText(" ");
+            super.onPreExecute();
+            progressDialog = new ProgressDialog(MainActivity.this);
+            progressDialog.setMessage("Please wait...");
+            progressDialog.setCancelable(false);
+            progressDialog.show();
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+            //Collect fingerprints
+            while (receiverWifi.isReady() == false) {
+                //wait
+            }
+            String fingerprints[] = receiverWifi.getFingerprints();
+            for (int i = 0; i < fingerprints.length; i++) {
+                Log.d(TAG, "Fingerprint[" + i + "] = " + fingerprints[i]);
+            }
+
+            //Hardcode fingerprints (only for testing)
+            //String fingerprints[] = {"{\"bssid\":\"d4:d7:48:d8:28:b0\",\"rss\":-40}", "{\"bssid\":\"00:0e:38:7a:37:77\",\"rss\":-50}"};
+
+            String cache = String.valueOf(getApplicationContext().getFilesDir());
+            Log.d(TAG, "cache path = " + cache + "/");
+            AnyplacePost server = new AnyplacePost("ap-dev.cs.ucy.ac.cy", "443", cache + "/");
+
+            String estimateResults = server.estimatePosition(build, floor, fingerprints, algorithm);
+            if (estimateResults == null){
+                return null;
+            }
+
+            String[] response = estimateResults.split("[,:]");
+            double x = 0;
+            double y = 0;
+            for (int i = 0; i < response.length; i++) {
+                if (response[i].equals("\"lat\"")) {
+                    x = Double.parseDouble(response[i + 1].replace('"', ' '));
+                    Log.d(TAG, "lan = " + x);
+                }
+                if (response[i].equals("\"long\"")) {
+                    y = Double.parseDouble(response[i + 1].replace('"', ' '));
+                    Log.d(TAG, "lon = " + y);
+                }
+            }
+            MapsActivity.lat = x;
+            MapsActivity.lon = y;
+
+            //Open google maps
+            Intent myIntent = new Intent(MainActivity.this, MapsActivity.class);
+            MainActivity.this.startActivity(myIntent);
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String response) {
+            progressDialog.hide();
+            Toast.makeText(getApplicationContext(), "(" + (float) MapsActivity.lat + ", " + (float) MapsActivity.lon + ")", Toast.LENGTH_LONG).show();
+        }
+    }//end class AsyncTaskOnlineLoc
+
+    /**
+     * Offline Localization - Async Task
+     */
+    public class AsyncTaskOfflineLocal extends AsyncTask<String, String, String> {
+        @Override
+        protected void onPreExecute() {
+            tvOutput.setText(" ");
+            super.onPreExecute();
+            progressDialog = new ProgressDialog(MainActivity.this);
+            progressDialog.setMessage("Please wait...");
+            progressDialog.setCancelable(false);
+            progressDialog.show();
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+            //Wifi fingerprints
+            while (receiverWifi.isReady() == false) {
+                //wait
+            }
+            String fingerprints[] = receiverWifi.getFingerprints();
+            for (int i = 0; i < fingerprints.length; i++) {
+                Log.d(TAG, "Fingerprint[" + i + "] = " + fingerprints[i]);
+            }
+
+            //Hardcode fingerprints (only for testing)
+            //String fingerprints[] = {"{\"bssid\":\"d4:d7:48:d8:28:b0\",\"rss\":-40}", "{\"bssid\":\"00:0e:38:7a:37:77\",\"rss\":-50}"};
+
+            String cache = String.valueOf(getApplicationContext().getFilesDir());
+            Log.d(TAG, "cache path = " + cache + "/");
+            AnyplacePost client = new AnyplacePost("ap-dev.cs.ucy.ac.cy", "443", cache + "/");
+
+            String radioResults = client.radioByBuildingFloor(access_token, build, floor);
+            if (radioResults == null){
+                return null;
+            }
+
+            String estimateResults = client.estimatePositionOffline(build, floor, fingerprints, algorithm);
+            if (estimateResults == null){
+                return null;
+            }
+
+            String response[] = estimateResults.split(" ");
+            double x = Double.parseDouble(response[0]);
+            double y = Double.parseDouble(response[1]);
+            Log.d(TAG, "lan = " + x);
+            Log.d(TAG, "lon = " + y);
+
+            MapsActivity.lat = x;
+            MapsActivity.lon = y;
+
+            //Open google maps
+            Intent myIntent = new Intent(MainActivity.this, MapsActivity.class);
+            MainActivity.this.startActivity(myIntent);
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String response) {
+            progressDialog.hide();
+            Toast.makeText(getApplicationContext(), "(" + (float) MapsActivity.lat + ", " + (float) MapsActivity.lon + ")", Toast.LENGTH_LONG).show();
+        }
+    }//end class AsyncTaskOfflineLocal
+
 }
+

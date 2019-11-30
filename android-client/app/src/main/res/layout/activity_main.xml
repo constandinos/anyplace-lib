@@ -10,27 +10,32 @@
     tools:layout_editor_absoluteX="1dp"
     tools:layout_editor_absoluteY="604dp">
 
-
     <Button
         android:id="@+id/button"
-        android:layout_width="210dp"
-        android:layout_height="64dp"
+        android:layout_width="271dp"
+        android:layout_height="63dp"
         android:layout_gravity="center_vertical|center_horizontal"
-        android:text="API Call" />
-
+        android:text="API CALL&#10;(All building floors)"
+        android:textAllCaps="false" />
 
     <Button
-        android:id="@+id/buttonOpenMaps"
-        android:layout_width="210dp"
-        android:layout_height="58dp"
+        android:id="@+id/buttonOnlineLocalization"
+        android:layout_width="271dp"
+        android:layout_height="63dp"
         android:layout_gravity="center_vertical|center_horizontal"
-        android:text="GMaps" />
+        android:text="ONLINE LOCALIZATION" />
+
+    <Button
+        android:id="@+id/buttonOfflineLocalization"
+        android:layout_width="271dp"
+        android:layout_height="63dp"
+        android:layout_gravity="center_vertical|center_horizontal"
+        android:text="OFFLINE LOCALIZATION" />
 
     <TextView
         android:id="@+id/tvOutput"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:minHeight="100dp"
-        android:text="Results" />
+        android:layout_height="match_parent"
+        android:scrollbars="vertical" />
 
 </LinearLayout>
