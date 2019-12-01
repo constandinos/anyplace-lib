@@ -265,12 +265,10 @@ public class Tester {
 					cmd[2] = "sudo iwlist wlo1 scan | awk  '/Address/ {print $5}; /level/ {print $3}' |  cut -d\"=\" -f2 ";
 				}
 				else if (operating_system.equals("mac")) {
-					/*
-					Ôo be completed by Xristakis
-					cmd[0] =
-					cmd[1] = 
-					cmd[2] = 
-					*/
+					cmd[0] = "/bin/sh";
+					cmd[1] = "-c";
+					cmd[2] = "/System/Library/PrivateFrameworks/Apple80211.framework/Versions/A/Resources/airport -s | grep ':' | tr -s ' ' | cut -d' ' -f3 -f4| tr ' ' '\n'";
+					
 				}
 				else {
 					System.out.println("Only linux and mac are the available operating systems");
@@ -301,7 +299,9 @@ public class Tester {
 					ex.printStackTrace();
 				}
 				aps=Arrays.copyOf(aps, counter);
-
+				for (int j=0; j<counter;j++) {
+					System.out.println(aps[j]);
+				}
 				response = client.estimatePosition(buid, floor, aps, algorithm);
 				System.out.println(response + "\n"); /* .substring(0, 100) */
 			} else if (args[0].equals("-estimatePosOffline")) {
@@ -321,12 +321,9 @@ public class Tester {
 					cmd[2] = "sudo iwlist wlo1 scan | awk  '/Address/ {print $5}; /level/ {print $3}' |  cut -d\"=\" -f2 ";
 				}
 				else if (operating_system.equals("mac")) {
-					/*
-					Ôo be completed by Xristakis
-					cmd[0] =
-					cmd[1] = 
-					cmd[2] = 
-					*/
+					cmd[0] = "/bin/sh";
+					cmd[1] = "-c";
+					cmd[2] = "/System/Library/PrivateFrameworks/Apple80211.framework/Versions/A/Resources/airport -s | grep ':' | tr -s ' ' | cut -d' ' -f3 -f4| tr ' ' '\n'";
 				}
 				else {
 					System.out.println("Only linux and mac are the available operating systems");

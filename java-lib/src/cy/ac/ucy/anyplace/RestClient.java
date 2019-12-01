@@ -50,16 +50,16 @@ import okhttp3.Response;
 
 /*
  * This class makes the requests to the server using HTTP POST
- * 
- * 
- * 
  */
-
 public class RestClient {
 
-	/*
+
+	/**
 	 * Here we build the POST request for the server api
-	 * 
+	 * @param map	This is a HashMap of the api parameters to be placed in the payload
+	 * @param host	This is the url of the server api
+	 * @param path	This is the path for the api request
+	 * @return	Returns a String of the response body from the server
 	 */
 	public String doPost(Map<String, String> map, String host, String path) {
 
@@ -88,6 +88,11 @@ public class RestClient {
 		}
 	}
 
+	/**
+	 * @param host	The name of the server
+	 * @param url	The full url for the file we wish to request
+	 * @return	Returns a byte[] of the file
+	 */
 	public byte[] getFileWithGet(String host, String url) {
 
 		OkHttpClient.Builder clientBuilder = new OkHttpClient.Builder().addInterceptor(new UnzippingInterceptor());
@@ -110,6 +115,11 @@ public class RestClient {
 		}
 	}
 
+	/**
+	 * @param host	The name of the server
+	 * @param url	The full url for the file we wish to request
+	 * @return	Returns a byte[] of the file
+	 */
 	public byte[] getFileWithPost(String host, String url) {
 
 		String query = makeRequestBody(null);
@@ -139,7 +149,6 @@ public class RestClient {
 
 	/*
 	 * Here we make the payload that contains all the necessary parameters
-	 * 
 	 */
 	private String makeRequestBody(Map<String, String> map) {
 

@@ -83,9 +83,13 @@ public class AnyplacePost {
 		return image;
 	}
 
-	// Navigation
-	// POI Details
-
+	/**
+	 * 	Gets the details of a specific Point Of Interest
+	 * 
+	 * @param access_token	The users access token (api key)
+	 * @param pois			The POI that is being specified
+	 * @return				The response JSON as a String
+	 */
 	public String poiDetails(String access_token, String pois) {
 		RestClient client = new RestClient();
 		setPath("/anyplace/navigation/pois/id");
@@ -100,13 +104,13 @@ public class AnyplacePost {
 	/**
 	 * Navigation instructions given from a given location to a POI
 	 * 
-	 * @param access_token
-	 * @param pois_to
-	 * @param buid
-	 * @param floor
-	 * @param coordinates_la
-	 * @param coordinates_lo
-	 * @return
+	 * @param access_token		The users access token (api key)
+	 * @param pois_to			The target POI
+	 * @param buid				The building ID
+	 * @param floor				The floor number
+	 * @param coordinates_la	The latitude of position
+	 * @param coordinates_lo	The longitude of position
+	 * @return					
 	 */
 	public String navigationXY(String access_token, String pois_to, String buid, String floor, String coordinates_lat,
 			String coordinates_lon) {
@@ -138,8 +142,15 @@ public class AnyplacePost {
 
 	}
 
-	// Navigation instructions between 2 POIs.
+	
 
+	/**
+	 * Navigation instructions between 2 POIs.
+	 * @param access_token	The users access token (api key)
+	 * @param pois_to		The target POI
+	 * @param pois_from		The starting POI
+	 * @return				The navigation path in the form of a JSON string as sent by the server
+	 */
 	public String navigationPoiToPoi(String access_token, String pois_to, String pois_from) {
 
 		RestClient client = new RestClient();
@@ -164,9 +175,11 @@ public class AnyplacePost {
 		return response;
 	}
 
-	// ---------------------------------------------------------------------------------------------------------------------
-
-	// Get all annotated buildings
+	
+	/**
+	 * Get all annotated buildings
+	 * @return	The response JSON as a String
+	 */
 	public String buildingAll() {
 		RestClient client = new RestClient();
 		setPath("/anyplace/mapping/building/all");
@@ -174,7 +187,12 @@ public class AnyplacePost {
 		return client.doPost(null, getHost(), getPath());
 	}
 
-	// Get all buildings for a campus
+	
+	/**
+	 * Get all buildings for a campus
+	 * @param cuid	The campus ID
+	 * @return		JSON String response
+	 */
 	public String buildingsByCampus(String cuid) {
 
 		RestClient client = new RestClient();
@@ -186,7 +204,11 @@ public class AnyplacePost {
 		return response;
 	}
 
-	// Get all buildings with the same code
+	/**
+	 * Get all buildings with the same code
+	 * @param bucode	The building code	
+	 * @return			JSON String response
+	 */
 	public String buildingsByBuildingCode(String bucode) {
 		RestClient client = new RestClient();
 		setPath("/anyplace/mapping/building/all_bucode");
@@ -196,7 +218,13 @@ public class AnyplacePost {
 		return client.doPost(params, getHost(), getPath());
 	}
 
-	// Get all nearby buildings - 50 meter radius
+	/**
+	 * Get all nearby buildings - 50 meter radius
+	 * @param access_token		The users access token (api key)
+	 * @param coordinates_lat	The latitude 
+	 * @param coordinates_lon	The longitude 
+	 * @return					Gives the JSON String response of the server
+	 */
 	public String nearbyBuildings(String access_token, String coordinates_lat, String coordinates_lon) {
 
 		RestClient client = new RestClient();
@@ -210,7 +238,12 @@ public class AnyplacePost {
 		return response;
 	}
 
-	// Get all floors of a building
+	
+	/**
+	 * Get all floors of a building
+	 * @param buid	Building ID
+	 * @return		A JSON String containing all the floors of the building
+	 */
 	public String allBuildingFloors(String buid) {
 
 		RestClient client = new RestClient();
@@ -219,32 +252,16 @@ public class AnyplacePost {
 		params.put("buid", buid);
 
 		String response = client.doPost(params, getHost(), getPath());
-		/*
-		 * JSONObject obj = new JSONObject(response);
-		 * 
-		 * JSONArray floors = obj.getJSONArray("floors"); int length = floors.length();
-		 * for (int i = 0; i < length; i++) { String temp = "res/" + buid + "/" +
-		 * floors.getJSONObject(i).getString("floor_name"); Path path = Paths.get(temp);
-		 * 
-		 * try { Files.createDirectories(path); } catch (IOException e1) { // TODO
-		 * Auto-generated catch block e1.printStackTrace(); } String filename = "res/" +
-		 * buid + "/" + floors.getJSONObject(i).getString("floor_name") + "/" +
-		 * "floor.txt";
-		 * 
-		 * FileOutputStream outputStream; try { outputStream = new
-		 * FileOutputStream(filename);
-		 * outputStream.write(floors.getJSONObject(i).toString().getBytes());
-		 * outputStream.close(); } catch (FileNotFoundException e) { // TODO
-		 * Auto-generated catch block e.printStackTrace(); } catch (JSONException e) {
-		 * // TODO Auto-generated catch block e.printStackTrace(); } catch (IOException
-		 * e) { // TODO Auto-generated catch block e.printStackTrace(); }
-		 * 
-		 * }
-		 */
+	
 		return response;
 	}
 
-	// Get all POIs inside of a building
+	
+	/**
+	 * Get all POIs inside of a building
+	 * @param buid	The building ID
+	 * @return		JSON string with all the POIs in the building
+	 */
 	public String allBuildingPOIs(String buid) {
 
 		RestClient client = new RestClient();
@@ -257,7 +274,13 @@ public class AnyplacePost {
 		return response;
 	}
 
-	// Get all POIs inside of a floor of a building
+	
+	/**
+	 * Get all POIs inside of a floor of a building
+	 * @param buid		The building ID
+	 * @param floor		The floor number
+	 * @return			JSON String with all the POIs of a floor
+	 */
 	public String allBuildingFloorPOIs(String buid, String floor) {
 
 		RestClient client = new RestClient();
@@ -271,7 +294,13 @@ public class AnyplacePost {
 		return response;
 	}
 
-	// Get all connections between POIs inside of a floor of a building
+	
+	/**
+	 * Get all connections between POIs inside of a floor of a building
+	 * @param buid		The building ID
+	 * @param floor		The floor number
+	 * @return			JSON String with all the connections in a floor
+	 */
 	public String connectionsByFloor(String buid, String floor) {
 
 		RestClient client = new RestClient();
@@ -285,8 +314,14 @@ public class AnyplacePost {
 		return response;
 	}
 
-	// Get all positions with their respective Wi-Fi radio measurements.
+	
 
+	/**
+	 * Get all positions with their respective Wi-Fi radio measurements.
+	 * @param buid		The building ID
+	 * @param floor		The floor number
+	 * @return			JSON String with the wifi intensities on a floor
+	 */
 	public String radioheatMapBuildingFloor(String buid, String floor) {
 
 		RestClient client = new RestClient();
@@ -301,10 +336,15 @@ public class AnyplacePost {
 
 	}
 
-	// ------------------------------------------------------------------------------------------------------------------
 
-	// Download the floor plan in base64 png format
 
+	/**
+	 * Download the floor plan in base64 png format. It also stores the file localy as a png file
+	 * @param access_token	The access token(api key)
+	 * @param buid			The building ID
+	 * @param floor			The floor number
+	 * @return				JSON String containing the floor plan in a base64 format
+	 */
 	public String floorplans64(String access_token, String buid, String floor) {
 
 		RestClient client = new RestClient();
@@ -332,8 +372,15 @@ public class AnyplacePost {
 		return response;
 	}
 
-	// Download the floor plan tiles in a zip file
+	
 
+	/**
+	 * Download the floor plan tiles in a zip file
+	 * @param access_token	The access token(api key)
+	 * @param buid			The building ID
+	 * @param floor			The floor number
+	 * @return				JSON String containing the floor tile zip download url
+	 */
 	public String floortiles(String access_token, String buid, String floor) {
 
 		RestClient client = new RestClient();
@@ -370,10 +417,15 @@ public class AnyplacePost {
 		return response;
 	}
 
-	// ------------------------------------------------------------------------------------------------
-
-	// Radio map using all entries near the location
-
+	
+	/**
+	 * Radio map using all entries near the location
+	 * @param access_token		The access token(api key)
+	 * @param coordinates_lat	Latitude
+	 * @param coordinates_lon	Longitude
+	 * @param floor				The floor number
+	 * @return					JSON String with all the radio measurements of a floor
+	 */
 	public String radioByCoordinatesFloor(String access_token, String coordinates_lat, String coordinates_lon,
 			String floor) {
 
@@ -392,14 +444,22 @@ public class AnyplacePost {
 
 	}
 
-	// Get a radio map in a floor with a range
+	
+	/**
+	 * Get a radio map in a floor with a range
+	 * @param buid				The building ID
+	 * @param floor				The floor number
+	 * @param coordinates_lat	The Latitude
+	 * @param coordinates_lon	The Longitude
+	 * @param range				The desired range
+	 * @return					JSON String with the radiomap measurements of the floor
+	 */
 	public String radioByBuildingFloorRange(String buid, String floor, String coordinates_lat, String coordinates_lon,
 			String range) {
 
 		RestClient client = new RestClient();
 		setPath("/anyplace/position/radio_by_floor_bbox");
 		Map<String, String> params = new HashMap<String, String>();
-		// params.put("access_token", access_token);
 		params.put("buid", buid);
 		params.put("floor_number", floor);
 		params.put("coordinates_lat", coordinates_lat);
@@ -412,8 +472,15 @@ public class AnyplacePost {
 
 	}
 
-	// Radiomap using all the entries of an entire floor of a building
+	
 
+	/**
+	 * Radiomap using all the entries of an entire floor of a building. The measurements are also stored locally for use by estimatePositionOffline
+	 * @param access_token	The access token(api key)
+	 * @param buid			The building ID
+	 * @param floor			The floor number
+	 * @return				JSON String with the radio measurement of the floor
+	 */
 	public String radioByBuildingFloor(String access_token, String buid, String floor) {
 
 		RestClient client = new RestClient();
@@ -484,7 +551,15 @@ public class AnyplacePost {
 
 	}
 
-	// Get an estimation on the user's position based on the APs.
+	
+	/** 
+	 * Get an estimation on the user's position based on the APs.
+	 * @param buid			The building ID
+	 * @param floor			The floor number
+	 * @param aps			A table of bssid and rss fingerprints in the form of a JSON
+	 * @param algorithm		The number of the desired algorithm
+	 * @return				JSON String containing the lat and lon
+	 */
 	public String estimatePosition(String buid, String floor, String aps[], String algorithm) {
 
 		RestClient client = new RestClient();
@@ -514,7 +589,14 @@ public class AnyplacePost {
 		return response;
 	}
 
-	// Get an estimation on the user's position based on the APs while offline
+	/** 
+	 * Get an estimation on the user's position based on the APs while offline. Needs the radiomap to be stored locally.
+	 * @param buid			The building ID
+	 * @param floor			The floor number
+	 * @param aps			A table of bssid and rss fingerprints in the form of a JSON
+	 * @param algorithm		The number of the desired algorithm
+	 * @return				String with the lat and lon
+	 */
 	public String estimatePositionOffline(String buid, String floor, String aps[], String algorithm) {
 
 		ArrayList<LogRecord> list = new ArrayList<LogRecord>();
