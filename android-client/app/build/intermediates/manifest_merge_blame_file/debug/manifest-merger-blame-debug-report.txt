@@ -65,79 +65,78 @@
 36-->C:\Users\const\AndroidStudioProjects\AnyplaceApp\app\src\main\AndroidManifest.xml:25:9-54
 37        android:supportsRtl="true"
 37-->C:\Users\const\AndroidStudioProjects\AnyplaceApp\app\src\main\AndroidManifest.xml:26:9-35
-38        android:testOnly="true"
-39        android:theme="@style/AppTheme" >
-39-->C:\Users\const\AndroidStudioProjects\AnyplaceApp\app\src\main\AndroidManifest.xml:27:9-40
-40
-41        <!--
-42             The API key for Google Maps-based APIs is defined as a string resource.
-43             (See the file "res/values/google_maps_api.xml").
-44             Note that the API key is linked to the encryption key used to sign the APK.
-45             You need a different API key for each encryption key, including the release key that is used to
-46             sign the APK for publishing.
-47             You can define the keys for the debug and release targets in src/debug/ and src/release/.
-48        -->
-49        <meta-data
-49-->C:\Users\const\AndroidStudioProjects\AnyplaceApp\app\src\main\AndroidManifest.xml:37:9-39:55
-50            android:name="com.google.android.geo.API_KEY"
-50-->C:\Users\const\AndroidStudioProjects\AnyplaceApp\app\src\main\AndroidManifest.xml:38:13-58
-51            android:value="@string/google_maps_key" />
-51-->C:\Users\const\AndroidStudioProjects\AnyplaceApp\app\src\main\AndroidManifest.xml:39:13-52
-52
-53        <activity
-53-->C:\Users\const\AndroidStudioProjects\AnyplaceApp\app\src\main\AndroidManifest.xml:41:9-43:68
-54            android:name="cy.ac.ucy.cs.anyplace.MapsActivity"
-54-->C:\Users\const\AndroidStudioProjects\AnyplaceApp\app\src\main\AndroidManifest.xml:42:13-41
-55            android:label="@string/title_activity_maps" />
-55-->C:\Users\const\AndroidStudioProjects\AnyplaceApp\app\src\main\AndroidManifest.xml:43:13-56
-56        <activity android:name="cy.ac.ucy.cs.anyplace.MainActivity" >
-56-->C:\Users\const\AndroidStudioProjects\AnyplaceApp\app\src\main\AndroidManifest.xml:44:9-50:20
-56-->C:\Users\const\AndroidStudioProjects\AnyplaceApp\app\src\main\AndroidManifest.xml:44:19-47
-57            <intent-filter>
-57-->C:\Users\const\AndroidStudioProjects\AnyplaceApp\app\src\main\AndroidManifest.xml:45:13-49:29
-58                <action android:name="android.intent.action.MAIN" />
-58-->C:\Users\const\AndroidStudioProjects\AnyplaceApp\app\src\main\AndroidManifest.xml:46:17-69
-58-->C:\Users\const\AndroidStudioProjects\AnyplaceApp\app\src\main\AndroidManifest.xml:46:25-66
-59
-60                <category android:name="android.intent.category.LAUNCHER" />
-60-->C:\Users\const\AndroidStudioProjects\AnyplaceApp\app\src\main\AndroidManifest.xml:48:17-77
-60-->C:\Users\const\AndroidStudioProjects\AnyplaceApp\app\src\main\AndroidManifest.xml:48:27-74
-61            </intent-filter>
-62        </activity>
-63        <!-- Needs to be explicitly declared on P+ -->
-64        <uses-library
-64-->[com.google.android.gms:play-services-maps:16.1.0] C:\Users\const\.gradle\caches\transforms-2\files-2.1\80cee4b79af09ba181d0cf7628c4e697\jetified-play-services-maps-16.1.0\AndroidManifest.xml:33:9-35:40
-65            android:name="org.apache.http.legacy"
-65-->[com.google.android.gms:play-services-maps:16.1.0] C:\Users\const\.gradle\caches\transforms-2\files-2.1\80cee4b79af09ba181d0cf7628c4e697\jetified-play-services-maps-16.1.0\AndroidManifest.xml:34:13-50
-66            android:required="false" />
-66-->[com.google.android.gms:play-services-maps:16.1.0] C:\Users\const\.gradle\caches\transforms-2\files-2.1\80cee4b79af09ba181d0cf7628c4e697\jetified-play-services-maps-16.1.0\AndroidManifest.xml:35:13-37
-67
-68        <activity
-68-->[com.google.android.gms:play-services-base:16.0.1] C:\Users\const\.gradle\caches\transforms-2\files-2.1\e44616e82e6e7d66b6a8989750edc8ee\jetified-play-services-base-16.0.1\AndroidManifest.xml:23:9-26:75
-69            android:name="com.google.android.gms.common.api.GoogleApiActivity"
-69-->[com.google.android.gms:play-services-base:16.0.1] C:\Users\const\.gradle\caches\transforms-2\files-2.1\e44616e82e6e7d66b6a8989750edc8ee\jetified-play-services-base-16.0.1\AndroidManifest.xml:24:13-79
-70            android:exported="false"
-70-->[com.google.android.gms:play-services-base:16.0.1] C:\Users\const\.gradle\caches\transforms-2\files-2.1\e44616e82e6e7d66b6a8989750edc8ee\jetified-play-services-base-16.0.1\AndroidManifest.xml:25:13-37
-71            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-71-->[com.google.android.gms:play-services-base:16.0.1] C:\Users\const\.gradle\caches\transforms-2\files-2.1\e44616e82e6e7d66b6a8989750edc8ee\jetified-play-services-base-16.0.1\AndroidManifest.xml:26:13-72
-72
-73        <meta-data
-73-->[com.google.android.gms:play-services-basement:16.0.1] C:\Users\const\.gradle\caches\transforms-2\files-2.1\856365d82533ce57e4a17a8f32ebca99\jetified-play-services-basement-16.0.1\AndroidManifest.xml:23:9-25:69
-74            android:name="com.google.android.gms.version"
-74-->[com.google.android.gms:play-services-basement:16.0.1] C:\Users\const\.gradle\caches\transforms-2\files-2.1\856365d82533ce57e4a17a8f32ebca99\jetified-play-services-basement-16.0.1\AndroidManifest.xml:24:13-58
-75            android:value="@integer/google_play_services_version" />
-75-->[com.google.android.gms:play-services-basement:16.0.1] C:\Users\const\.gradle\caches\transforms-2\files-2.1\856365d82533ce57e4a17a8f32ebca99\jetified-play-services-basement-16.0.1\AndroidManifest.xml:25:13-66
-76
-77        <provider
-77-->[androidx.lifecycle:lifecycle-process:2.0.0] C:\Users\const\.gradle\caches\transforms-2\files-2.1\7309f8169174f11110ad56440ca8f929\lifecycle-process-2.0.0\AndroidManifest.xml:23:9-27:43
-78            android:name="androidx.lifecycle.ProcessLifecycleOwnerInitializer"
-78-->[androidx.lifecycle:lifecycle-process:2.0.0] C:\Users\const\.gradle\caches\transforms-2\files-2.1\7309f8169174f11110ad56440ca8f929\lifecycle-process-2.0.0\AndroidManifest.xml:24:13-79
-79            android:authorities="cy.ac.ucy.cs.anyplace.lifecycle-process"
-79-->[androidx.lifecycle:lifecycle-process:2.0.0] C:\Users\const\.gradle\caches\transforms-2\files-2.1\7309f8169174f11110ad56440ca8f929\lifecycle-process-2.0.0\AndroidManifest.xml:25:13-69
-80            android:exported="false"
-80-->[androidx.lifecycle:lifecycle-process:2.0.0] C:\Users\const\.gradle\caches\transforms-2\files-2.1\7309f8169174f11110ad56440ca8f929\lifecycle-process-2.0.0\AndroidManifest.xml:26:13-37
-81            android:multiprocess="true" />
-81-->[androidx.lifecycle:lifecycle-process:2.0.0] C:\Users\const\.gradle\caches\transforms-2\files-2.1\7309f8169174f11110ad56440ca8f929\lifecycle-process-2.0.0\AndroidManifest.xml:27:13-40
-82    </application>
-83
-84</manifest>
+38        android:theme="@style/AppTheme" >
+38-->C:\Users\const\AndroidStudioProjects\AnyplaceApp\app\src\main\AndroidManifest.xml:27:9-40
+39
+40        <!--
+41             The API key for Google Maps-based APIs is defined as a string resource.
+42             (See the file "res/values/google_maps_api.xml").
+43             Note that the API key is linked to the encryption key used to sign the APK.
+44             You need a different API key for each encryption key, including the release key that is used to
+45             sign the APK for publishing.
+46             You can define the keys for the debug and release targets in src/debug/ and src/release/.
+47        -->
+48        <meta-data
+48-->C:\Users\const\AndroidStudioProjects\AnyplaceApp\app\src\main\AndroidManifest.xml:37:9-39:55
+49            android:name="com.google.android.geo.API_KEY"
+49-->C:\Users\const\AndroidStudioProjects\AnyplaceApp\app\src\main\AndroidManifest.xml:38:13-58
+50            android:value="@string/google_maps_key" />
+50-->C:\Users\const\AndroidStudioProjects\AnyplaceApp\app\src\main\AndroidManifest.xml:39:13-52
+51
+52        <activity
+52-->C:\Users\const\AndroidStudioProjects\AnyplaceApp\app\src\main\AndroidManifest.xml:41:9-43:68
+53            android:name="cy.ac.ucy.cs.anyplace.MapsActivity"
+53-->C:\Users\const\AndroidStudioProjects\AnyplaceApp\app\src\main\AndroidManifest.xml:42:13-41
+54            android:label="@string/title_activity_maps" />
+54-->C:\Users\const\AndroidStudioProjects\AnyplaceApp\app\src\main\AndroidManifest.xml:43:13-56
+55        <activity android:name="cy.ac.ucy.cs.anyplace.MainActivity" >
+55-->C:\Users\const\AndroidStudioProjects\AnyplaceApp\app\src\main\AndroidManifest.xml:44:9-50:20
+55-->C:\Users\const\AndroidStudioProjects\AnyplaceApp\app\src\main\AndroidManifest.xml:44:19-47
+56            <intent-filter>
+56-->C:\Users\const\AndroidStudioProjects\AnyplaceApp\app\src\main\AndroidManifest.xml:45:13-49:29
+57                <action android:name="android.intent.action.MAIN" />
+57-->C:\Users\const\AndroidStudioProjects\AnyplaceApp\app\src\main\AndroidManifest.xml:46:17-69
+57-->C:\Users\const\AndroidStudioProjects\AnyplaceApp\app\src\main\AndroidManifest.xml:46:25-66
+58
+59                <category android:name="android.intent.category.LAUNCHER" />
+59-->C:\Users\const\AndroidStudioProjects\AnyplaceApp\app\src\main\AndroidManifest.xml:48:17-77
+59-->C:\Users\const\AndroidStudioProjects\AnyplaceApp\app\src\main\AndroidManifest.xml:48:27-74
+60            </intent-filter>
+61        </activity>
+62        <!-- Needs to be explicitly declared on P+ -->
+63        <uses-library
+63-->[com.google.android.gms:play-services-maps:16.1.0] C:\Users\const\.gradle\caches\transforms-2\files-2.1\80cee4b79af09ba181d0cf7628c4e697\jetified-play-services-maps-16.1.0\AndroidManifest.xml:33:9-35:40
+64            android:name="org.apache.http.legacy"
+64-->[com.google.android.gms:play-services-maps:16.1.0] C:\Users\const\.gradle\caches\transforms-2\files-2.1\80cee4b79af09ba181d0cf7628c4e697\jetified-play-services-maps-16.1.0\AndroidManifest.xml:34:13-50
+65            android:required="false" />
+65-->[com.google.android.gms:play-services-maps:16.1.0] C:\Users\const\.gradle\caches\transforms-2\files-2.1\80cee4b79af09ba181d0cf7628c4e697\jetified-play-services-maps-16.1.0\AndroidManifest.xml:35:13-37
+66
+67        <activity
+67-->[com.google.android.gms:play-services-base:16.0.1] C:\Users\const\.gradle\caches\transforms-2\files-2.1\e44616e82e6e7d66b6a8989750edc8ee\jetified-play-services-base-16.0.1\AndroidManifest.xml:23:9-26:75
+68            android:name="com.google.android.gms.common.api.GoogleApiActivity"
+68-->[com.google.android.gms:play-services-base:16.0.1] C:\Users\const\.gradle\caches\transforms-2\files-2.1\e44616e82e6e7d66b6a8989750edc8ee\jetified-play-services-base-16.0.1\AndroidManifest.xml:24:13-79
+69            android:exported="false"
+69-->[com.google.android.gms:play-services-base:16.0.1] C:\Users\const\.gradle\caches\transforms-2\files-2.1\e44616e82e6e7d66b6a8989750edc8ee\jetified-play-services-base-16.0.1\AndroidManifest.xml:25:13-37
+70            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+70-->[com.google.android.gms:play-services-base:16.0.1] C:\Users\const\.gradle\caches\transforms-2\files-2.1\e44616e82e6e7d66b6a8989750edc8ee\jetified-play-services-base-16.0.1\AndroidManifest.xml:26:13-72
+71
+72        <meta-data
+72-->[com.google.android.gms:play-services-basement:16.0.1] C:\Users\const\.gradle\caches\transforms-2\files-2.1\856365d82533ce57e4a17a8f32ebca99\jetified-play-services-basement-16.0.1\AndroidManifest.xml:23:9-25:69
+73            android:name="com.google.android.gms.version"
+73-->[com.google.android.gms:play-services-basement:16.0.1] C:\Users\const\.gradle\caches\transforms-2\files-2.1\856365d82533ce57e4a17a8f32ebca99\jetified-play-services-basement-16.0.1\AndroidManifest.xml:24:13-58
+74            android:value="@integer/google_play_services_version" />
+74-->[com.google.android.gms:play-services-basement:16.0.1] C:\Users\const\.gradle\caches\transforms-2\files-2.1\856365d82533ce57e4a17a8f32ebca99\jetified-play-services-basement-16.0.1\AndroidManifest.xml:25:13-66
+75
+76        <provider
+76-->[androidx.lifecycle:lifecycle-process:2.0.0] C:\Users\const\.gradle\caches\transforms-2\files-2.1\7309f8169174f11110ad56440ca8f929\lifecycle-process-2.0.0\AndroidManifest.xml:23:9-27:43
+77            android:name="androidx.lifecycle.ProcessLifecycleOwnerInitializer"
+77-->[androidx.lifecycle:lifecycle-process:2.0.0] C:\Users\const\.gradle\caches\transforms-2\files-2.1\7309f8169174f11110ad56440ca8f929\lifecycle-process-2.0.0\AndroidManifest.xml:24:13-79
+78            android:authorities="cy.ac.ucy.cs.anyplace.lifecycle-process"
+78-->[androidx.lifecycle:lifecycle-process:2.0.0] C:\Users\const\.gradle\caches\transforms-2\files-2.1\7309f8169174f11110ad56440ca8f929\lifecycle-process-2.0.0\AndroidManifest.xml:25:13-69
+79            android:exported="false"
+79-->[androidx.lifecycle:lifecycle-process:2.0.0] C:\Users\const\.gradle\caches\transforms-2\files-2.1\7309f8169174f11110ad56440ca8f929\lifecycle-process-2.0.0\AndroidManifest.xml:26:13-37
+80            android:multiprocess="true" />
+80-->[androidx.lifecycle:lifecycle-process:2.0.0] C:\Users\const\.gradle\caches\transforms-2\files-2.1\7309f8169174f11110ad56440ca8f929\lifecycle-process-2.0.0\AndroidManifest.xml:27:13-40
+81    </application>
+82
+83</manifest>
