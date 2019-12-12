@@ -26,9 +26,9 @@ import org.ros.node.NodeMain;
 import org.ros.node.service.ServiceClient;
 import org.ros.node.service.ServiceResponseListener;
 
-import rosjava_custom_srv.CustomServiceResponse;
-import rosjava_custom_srv.CustomServiceRequest;
-import rosjava_custom_srv.CustomService;
+// import rosjava_custom_srv.CustomServiceResponse;
+// import rosjava_custom_srv.CustomServiceRequest;
+// import rosjava_custom_srv.CustomService;
 
 /**
  * A simple {@link ServiceClient} {@link NodeMain}.
@@ -45,34 +45,34 @@ public class Client extends AbstractNodeMain {
     return GraphName.of("anyplace_ros_client/client");
   }
 
-  @Override
-  public void onStart(final ConnectedNode connectedNode) {
-    ServiceClient<CustomServiceRequest, CustomServiceResponse> serviceClient;
-    try {
-      serviceClient = connectedNode.newServiceClient("AnyplaceService", CustomService._TYPE);
-    } catch (ServiceNotFoundException e) {
-      throw new RosRuntimeException(e);
-    }
-    final CustomServiceRequest request = serviceClient.newMessage();
-    //set the request/size
+  // @Override
+  // public void onStart(final ConnectedNode connectedNode) {
+  //   ServiceClient<CustomServiceRequest, CustomServiceResponse> serviceClient;
+  //   try {
+  //     serviceClient = connectedNode.newServiceClient("AnyplaceService", CustomService._TYPE);
+  //   } catch (ServiceNotFoundException e) {
+  //     throw new RosRuntimeException(e);
+  //   }
+  //   final CustomServiceRequest request = serviceClient.newMessage();
+  //   //set the request/size
 
-    request.setSize(10);
+  //   request.setSize(10);
 
-    serviceClient.call(request, new ServiceResponseListener<CustomServiceResponse>() {
-      @Override
-      public void onSuccess(CustomServiceResponse response) {
-        connectedNode.getLog().info(
-                String.format("The response is : "));
+  //   serviceClient.call(request, new ServiceResponseListener<CustomServiceResponse>() {
+  //     @Override
+  //     public void onSuccess(CustomServiceResponse response) {
+  //       connectedNode.getLog().info(
+  //               String.format("The response is : "));
 
-        for (long l : response.getRes()) {
-          connectedNode.getLog().info(l);
-        }
-      }
+  //       for (long l : response.getRes()) {
+  //         connectedNode.getLog().info(l);
+  //       }
+  //     }
 
-      @Override
-      public void onFailure(RemoteException e) {
-        throw new RosRuntimeException(e);
-      }
-    });
-  }
+  //     @Override
+  //     public void onFailure(RemoteException e) {
+  //       throw new RosRuntimeException(e);
+  //     }
+  //   });
+  // }
 }

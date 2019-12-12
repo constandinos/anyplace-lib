@@ -39,7 +39,7 @@ dependencies {
   compile 'org.ros.rosjava_core:rosjava:[0.3,0.4)'
   /* Example of a local subproject dependency */
   /* compile project(':sibling_gradle_project') */
-  compile 'org.ros.rosjava_messages:rosjava_custom_srv:[0.1, 0.2)'
+  compile 'org.ros.rosjava_messages:anyplace_ros_custom_msgs:[0.1, 0.2)'
 }
 
 task cleanScripts(dependsOn: 'installDist') {

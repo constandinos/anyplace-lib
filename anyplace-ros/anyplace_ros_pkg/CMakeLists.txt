@@ -9,7 +9,7 @@ project(anyplace_ros_pkg)
 # Catkin
 ##############################################################################
 
-find_package(catkin REQUIRED rosjava_build_tools rosjava_custom_srv)
+find_package(catkin REQUIRED rosjava_build_tools anyplace_ros_custom_msgs)
 
 # Set the gradle targets you want catkin's make to run by default, e.g.
 #   catkin_rosjava_setup(installDist)
