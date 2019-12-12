@@ -26,9 +26,9 @@ import org.ros.node.NodeMain;
 import org.ros.node.service.ServiceClient;
 import org.ros.node.service.ServiceResponseListener;
 
-// import rosjava_custom_srv.CustomServiceResponse;
-// import rosjava_custom_srv.CustomServiceRequest;
-// import rosjava_custom_srv.CustomService;
+import rosjava_custom_srv.CustomServiceResponse;
+import rosjava_custom_srv.CustomServiceRequest;
+import rosjava_custom_srv.CustomService;
 
 /**
  * A simple {@link ServiceClient} {@link NodeMain}.

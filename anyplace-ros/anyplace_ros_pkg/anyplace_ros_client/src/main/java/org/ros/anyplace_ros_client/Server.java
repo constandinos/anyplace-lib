@@ -25,9 +25,9 @@ import org.ros.node.service.ServiceServer;
 import java.io.Console;
 
 import cy.ac.ucy.anyplace.AnyplacePost;
-// import rosjava_custom_srv.CustomService;
-// import rosjava_custom_srv.CustomServiceRequest;
-// import rosjava_custom_srv.CustomServiceResponse;
+import rosjava_custom_srv.CustomService;
+import rosjava_custom_srv.CustomServiceRequest;
+import rosjava_custom_srv.CustomServiceResponse;
 
 
 /**
@@ -45,24 +45,25 @@ public class Server extends AbstractNodeMain {
     return GraphName.of("anyplace_ros_client/server");
   }
 
+
   @Override
   public void onStart(final ConnectedNode connectedNode) {
-     AnyplacePost server = new AnyplacePost("ap-dev.cs.ucy.ac.cy", "443", "/");
-    connectedNode.newServiceServer("AnyplaceService", CustomService._TYPE,
-        new ServiceResponseBuilder<CustomServiceRequest, CustomServiceResponse>() {
-          @Override
-          public void
-              build(CustomServiceRequest request, CustomServiceResponse response) {
-              //Create an array with the size of request.getSize()
-              long[] tmpArray=new long[request.getSize()];
-              for(int i=0; i<request.getSize();i++){
-                  tmpArray[i]=i;
-              }
-               response.setRes(tmpArray);
-                   connectedNode.getLog().info(
-                           String.format("The size of the array will be "+request.getSize()));
-
+    AnyplacePost server = new AnyplacePost("ap-dev.cs.ucy.ac.cy", "443", "/");
+    ServiceResponseBuilder<CustomServiceRequest, CustomServiceResponse> AnyplaceService = new ServiceResponseBuilder<CustomServiceRequest, CustomServiceResponse>() {
+      @Override
+      public void build(CustomServiceRequest request, CustomServiceResponse response) {
+          //Create an array with the size of request.getSize()
+          long[] tmpArray=new long[request.getSize()];
+          for(int i=0; i<request.getSize();i++){
+              tmpArray[i]=i;
           }
-        });
+           response.setRes(tmpArray);
+               connectedNode.getLog().info(
+                       String.format("The size of the array will be "+request.getSize()));
+    
+      }
+    };
+    connectedNode.newServiceServer("AnyplaceService", CustomService._TYPE, AnyplaceService);
   }
+
 }
