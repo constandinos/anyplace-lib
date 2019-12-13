@@ -55,8 +55,8 @@ find_package(catkin REQUIRED COMPONENTS
 
 ## Generate services in the 'srv' folder
 add_service_files(
-  DIRECTORY srv
-  FILES EstimatePosition.srv
+  DIRECTORY 
+  srv
 )
 
 ## Generate actions in the 'action' folder
