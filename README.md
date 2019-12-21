@@ -3,7 +3,6 @@ Anyplace Library
 
 A standalone java library that provides access to a set of endpoints from the [Anyplace API](https://ap.cs.ucy.ac.cy/developers/). The library connects directly with the Anyplace API and is written in JAVA. The clients of this library collect the WiFi fingerprints from a building and use this library for localization. The library has been testing on linux, mac and android systems.
 
-
 Preamble
 ---
 
@@ -37,51 +36,51 @@ Usage
 ---
 #### Linux and Mac Client
 ```bash
-java -jar jar/anyplace-lib.jar -<endpoint> <parameters>
+java -jar bin/anyplace-lib.jar -<endpoint> <parameters>
 ```
 
 #### Examples
 Get all annotated buildings:
 ```bash
-java -jar jar/anyplace-lib.jar -buildingAll
+java -jar bin/anyplace-lib.jar -buildingAll
 ```
 
 Get all floors of a building:
 ```bash
-java -jar jar/anyplace-lib.jar -allBuildingFloors <buid>
-java -jar jar/anyplace-lib.jar -allBuildingFloors username_1373876832005
+java -jar bin/anyplace-lib.jar -allBuildingFloors <buid>
+java -jar bin/anyplace-lib.jar -allBuildingFloors username_1373876832005
 ```
 
 Get all POI connections inside a floor:
 ```bash
-java -jar jar/anyplace-lib.jar -connectionsByFloor <buid> <floor>
-java -jar jar/anyplace-lib.jar -connectionsByFloor username_1373876832005 1
+java -jar bin/anyplace-lib.jar -connectionsByFloor <buid> <floor>
+java -jar bin/anyplace-lib.jar -connectionsByFloor username_1373876832005 1
 ```
 
 Get all positions with their respective Wi-Fi radio measurements:
 ```bash
-java -jar jar/anyplace-lib.jar -heatmapBuidFloor <buid> <floor>
-java -jar jar/anyplace-lib.jar -heatmapBuidFloor username_1373876832005 1
+java -jar bin/anyplace-lib.jar -heatmapBuidFloor <buid> <floor>
+java -jar bin/anyplace-lib.jar -heatmapBuidFloor username_1373876832005 1
 ```
 
 Radiomap using all the entries near the coordinate parameters:
 ```bash
-java -jar jar/anyplace-lib.jar -radioBuidFloor <buid> <floor>
-java -jar jar/anyplace-lib.jar -radioBuidFloor username_1373876832005 1
+java -jar bin/anyplace-lib.jar -radioBuidFloor <buid> <floor>
+java -jar bin/anyplace-lib.jar -radioBuidFloor username_1373876832005 1
 ```
 
 Estimate the location of the user:
 ```bash
-java -jar jar/anyplace-lib.jar -estimatePosition <operating_system> <buid> <floor> <algorithm>
-java -jar jar/anyplace-lib.jar -estimatePosition linux username_1373876832005 1 1
-java -jar jar/anyplace-lib.jar -estimatePosition mac username_1373876832005 1 1
+java -jar bin/anyplace-lib.jar -estimatePosition <operating_system> <buid> <floor> <algorithm>
+java -jar bin/anyplace-lib.jar -estimatePosition linux username_1373876832005 1 1
+java -jar bin/anyplace-lib.jar -estimatePosition mac username_1373876832005 1 1
 ```
 
 Estimate the location of the user offline. Needs the radiomap file:
 ```bash
-java -jar jar/anyplace-lib.jar -estimatePosOffline <operating_system> <buid> <floor> <algorithm>
-java -jar jar/anyplace-lib.jar -estimatePosOffline linux username_1373876832005 1 1
-java -jar jar/anyplace-lib.jar -estimatePosOffline mac username_1373876832005 1 1
+java -jar bin/anyplace-lib.jar -estimatePosOffline <operating_system> <buid> <floor> <algorithm>
+java -jar bin/anyplace-lib.jar -estimatePosOffline linux username_1373876832005 1 1
+java -jar bin/anyplace-lib.jar -estimatePosOffline mac username_1373876832005 1 1
 ```
 
 Implemented Endpoints
