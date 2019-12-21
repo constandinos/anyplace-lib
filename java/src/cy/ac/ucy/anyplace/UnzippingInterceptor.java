@@ -4,7 +4,7 @@
  * Anyplace is a first-of-a-kind indoor information service offering GPS-less
  * localization, navigation and search inside buildings using ordinary smartphones.
  *
- * Author(s): Christakis Achilleos, Marcos Antonios Charalambous, Constandinos Demetriou
+ * Author(s): Christakis Achilleos, Constandinos Demetriou, Marcos Antonios Charalambous
  *
  * Co-supervisor: Paschalis Mpeis
  * 

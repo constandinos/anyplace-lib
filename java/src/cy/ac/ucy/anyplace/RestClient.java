@@ -4,7 +4,7 @@
  * Anyplace is a first-of-a-kind indoor information service offering GPS-less
  * localization, navigation and search inside buildings using ordinary smartphones.
  *
- * Author(s): Christakis Achilleos, Marcos Antonios Charalambous, Constandinos Demetriou
+ * Author(s): Christakis Achilleos, Constandinos Demetriou, Marcos Antonios Charalambous
  *
  * Co-supervisor: Paschalis Mpeis
  *
@@ -53,13 +53,14 @@ import okhttp3.Response;
  */
 public class RestClient {
 
-
 	/**
 	 * Here we build the POST request for the server api
-	 * @param map	This is a HashMap of the api parameters to be placed in the payload
-	 * @param host	This is the url of the server api
-	 * @param path	This is the path for the api request
-	 * @return	Returns a String of the response body from the server
+	 * 
+	 * @param map  This is a HashMap of the api parameters to be placed in the
+	 *             payload
+	 * @param host This is the url of the server api
+	 * @param path This is the path for the api request
+	 * @return Returns a String of the response body from the server
 	 */
 	public String doPost(Map<String, String> map, String host, String path) {
 
@@ -89,9 +90,9 @@ public class RestClient {
 	}
 
 	/**
-	 * @param host	The name of the server
-	 * @param url	The full url for the file we wish to request
-	 * @return	Returns a byte[] of the file
+	 * @param host The name of the server
+	 * @param url  The full url for the file we wish to request
+	 * @return Returns a byte[] of the file
 	 */
 	public byte[] getFileWithGet(String host, String url) {
 
@@ -116,9 +117,9 @@ public class RestClient {
 	}
 
 	/**
-	 * @param host	The name of the server
-	 * @param url	The full url for the file we wish to request
-	 * @return	Returns a byte[] of the file
+	 * @param host The name of the server
+	 * @param url  The full url for the file we wish to request
+	 * @return Returns a byte[] of the file
 	 */
 	public byte[] getFileWithPost(String host, String url) {
 

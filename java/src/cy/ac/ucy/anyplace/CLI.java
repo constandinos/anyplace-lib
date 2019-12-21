@@ -39,10 +39,57 @@
 package cy.ac.ucy.anyplace;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.InputStreamReader;
 import java.util.Arrays;
+import java.util.Scanner;
 
 public class CLI {
+
+	public final static String parametersFile = "debug/parameters.txt";
+	public static String access_token, host, port, cache;
+
+	/**
+	 * This function initializes the parameters.
+	 * 
+	 * @param line A line from the file
+	 */
+	public static void initialize_parameters(String line) {
+		String word[] = line.split(" ");
+		if (word[0].equals("access_token")) {
+			access_token = new String(word[1]);
+		} else if (word[0].equals("host")) {
+			host = new String(word[1]);
+		} else if (word[0].equals("port")) {
+			port = new String(word[1]);
+		} else if (word[0].equals("cache")) {
+			cache = new String(word[1]);
+		}
+	}
+
+	/**
+	 * This function reads the parameters file.
+	 */
+	public static void read_paramenters() {
+		try {
+			Scanner sc = new Scanner(new File(parametersFile));
+			while (sc.hasNext()) {
+				initialize_parameters(sc.nextLine());
+			}
+			sc.close();
+		} catch (FileNotFoundException e) {
+			System.out.println("Error: File " + parametersFile + " not found!");
+			System.out.println("Make sure that file " + parametersFile + " is in the correct format!");
+			System.out.println("The format of the file is:");
+			System.out.println("host ap-dev.cs.ucy.ac.cy");
+			System.out.println("port 43");
+			System.out.println("cache res/");
+			System.out.println(
+					"access_token <api_key> [The API key has be generated based on your google account through the anyplace architect]");
+			System.exit(-1);
+		}
+	}
 
 	/**
 	 * The main entry to our library. Inside the main function you can find the
@@ -51,15 +98,27 @@ public class CLI {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		// building_0213a78b-aba7-4b76-a60e-02e6c1aa42e5_1540195272732
-		// String buid = "username_1373876832005";
-		// String pois_to = "poi_064f4a01-07bd-45fa-9579-63fa197d3d90";
-		// String coordinates_la = "35.14414934169342";
-		// String coordinates_lo = "33.41130472719669";
-		// String floor = "0";
-		// String pois_from = "poi_88a34fd5-75bd-4601-81dc-fe5aef69bd3c";
-		String access_token = "eyJhbGciOiJSUzI1NiIsImtpZCI6IjhjNThlMTM4NjE0YmQ1ODc0MjE3MmJkNTA4MGQxOTdkMmIyZGQyZjMiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJhY2NvdW50cy5nb29nbGUuY29tIiwiYXpwIjoiNTg3NTAwNzIzOTcxLXNpOHM0cXFhdDl2NWVmZ2VtbmViaWhwaTNxZTlvbmxwLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwiYXVkIjoiNTg3NTAwNzIzOTcxLXNpOHM0cXFhdDl2NWVmZ2VtbmViaWhwaTNxZTlvbmxwLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwic3ViIjoiMTA0NDQxMzA0OTI3MzE2MzM5NDM2IiwiZW1haWwiOiJhY2hpbC5jaHJpc3Rvc0BnbWFpbC5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiYXRfaGFzaCI6InpSVUJ4cVBjT29xejB0cVpkNEg1WnciLCJuYW1lIjoiY2hyaXN0b3MgYWNoaWxsZW9zIiwicGljdHVyZSI6Imh0dHBzOi8vbGgzLmdvb2dsZXVzZXJjb250ZW50LmNvbS8tVTVqVzlpRk9kRVEvQUFBQUFBQUFBQUkvQUFBQUFBQUFBQUEvQUNIaTNyYzZfTEEzLWV2dGFJbXVTdDU0cFJRdmd1T1BOQS9zOTYtYy9waG90by5qcGciLCJnaXZlbl9uYW1lIjoiY2hyaXN0b3MiLCJmYW1pbHlfbmFtZSI6ImFjaGlsbGVvcyIsImxvY2FsZSI6ImVuIiwiaWF0IjoxNTcwMDIzNDE2LCJleHAiOjE1NzAwMjcwMTYsImp0aSI6ImMxMWY2YzIwMjgwZjc1YmMxZjE4NDMzM2QyZGM5NWY4MTYxYTZkNWUifQ.W_8IsTty5D7UdbcHkjrHyhNkEOyFc1r8fluvnd3kpV5wmK9Z4Tb0zv-W9DOr6mOGZUbaLvHR0Hncbqgec_iN9YNV281O3NRd-XERsn-Gf3oZ2z0Nbm5-_4NRg-WkLER4Ouo-upCd9TvXZwWqK0NNZm1Ka8N_JCzU0vb29T7lASZAZQ5POLtg3Z7PoAIk-h1HoO8Wb8acb-fkVaoLd-WR4sEhC93mxEaKe3DycXT0QtaO27GAYypz6HfWM3PsyPHio9nGr-GSt7ZNZuJYjnzqyRhXnx-H2dRggWbS6EAREWmBH2sdWe7fzMBFt_GNCl9q3yGVJQht5IOTmPDG9gixsw";
+		/*
+		 * String buid = "username_1373876832005"; String pois_to =
+		 * "poi_064f4a01-07bd-45fa-9579-63fa197d3d90"; String coordinates_la =
+		 * "35.14414934169342"; String coordinates_lo = "33.41130472719669"; String
+		 * floor = "0"; String pois_from = "poi_88a34fd5-75bd-4601-81dc-fe5aef69bd3c";
+		 */
+
 		String response;
+
+		read_paramenters();
+		if (access_token == null || host == null || port == null || cache == null || access_token.isEmpty()
+				|| host.isEmpty() || port.isEmpty() || cache.isEmpty()) {
+			System.out.println("Make sure that file " + parametersFile + " is in the correct format!");
+			System.out.println("The format of the file is:");
+			System.out.println("host ap-dev.cs.ucy.ac.cy");
+			System.out.println("port 43");
+			System.out.println("cache res/");
+			System.out.println(
+					"access_token <api_key> [The API key has be generated based on your google account through the anyplace architect]");
+			System.exit(0);
+		}
 
 		if (args.length == 0) {/* Menu of options is shown if no arguments are given. */
 			System.out.println("Please use one of the available options available options:");
@@ -89,14 +148,16 @@ public class CLI {
 
 			System.out.println("\nPosition");
 			System.out.println("--------");
-			System.out.println("-radioByCoordinatesFloor: Radiomap using all the entries near the coordinate parameters.");
+			System.out.println(
+					"-radioByCoordinatesFloor: Radiomap using all the entries near the coordinate parameters.");
 			System.out.println("-radioBuidFloor: Radiomap based on building and floor.");
 			System.out.println("-radioBuidFloorRange: Radiomap by limiting the range.");
 			System.out.println("-estimatePosition: Estimate the location of the user.");
-			System.out.println("-estimatePosOffline: Estimate the location of the user offline. Needs the radiomap file");
+			System.out
+					.println("-estimatePosOffline: Estimate the location of the user offline. Needs the radiomap file");
 
 		} else {
-			Anyplace client = new Anyplace("ap-dev.cs.ucy.ac.cy", "443", "res/");
+			Anyplace client = new Anyplace(host, port, cache);
 
 			if (args[0].equals("-poiDetails")) {
 				if (args.length != 2) {
@@ -237,17 +298,18 @@ public class CLI {
 				response = client.radioByBuildingFloor(access_token, buid, floor);
 				System.out.println(response + "\n"); /* .substring(0, 100) */
 			} else if (args[0].equals("-radioBuidFloorRange")) {
-						if (args.length != 3) {
-							System.out.println("Usage: -radioBuidFloorRange <buid> <foor> <coordinates_lat> <coordinates_lon> <range>");
-							System.exit(0);
-						}
-						String buid = args[1];
-						String floor = args[2];
-						String coordinates_lat = args[3];
-						String coordinates_lon = args[4];
-						String range =args[5];
-						response = client.radioByBuildingFloorRange(buid, floor, coordinates_lat, coordinates_lon, range);
-						System.out.println(response + "\n"); /* .substring(0, 100) */
+				if (args.length != 3) {
+					System.out.println(
+							"Usage: -radioBuidFloorRange <buid> <foor> <coordinates_lat> <coordinates_lon> <range>");
+					System.exit(0);
+				}
+				String buid = args[1];
+				String floor = args[2];
+				String coordinates_lat = args[3];
+				String coordinates_lon = args[4];
+				String range = args[5];
+				response = client.radioByBuildingFloorRange(buid, floor, coordinates_lat, coordinates_lon, range);
+				System.out.println(response + "\n"); /* .substring(0, 100) */
 			} else if (args[0].equals("-estimatePosition")) {
 				if (args.length != 5) {
 					System.out.println("Usage: -estimatePosition <operating_system> <buid> <floor> <algorithm>");
@@ -257,20 +319,18 @@ public class CLI {
 				String buid = args[2];
 				String floor = args[3];
 				String algorithm = args[4];
-				
+
 				String cmd[] = new String[3];
 				if (operating_system.equals("linux")) {
 					cmd[0] = "/bin/sh";
 					cmd[1] = "-c";
 					cmd[2] = "sudo iwlist wlo1 scan | awk  '/Address/ {print $5}; /level/ {print $3}' |  cut -d\"=\" -f2 ";
-				}
-				else if (operating_system.equals("mac")) {
+				} else if (operating_system.equals("mac")) {
 					cmd[0] = "/bin/sh";
 					cmd[1] = "-c";
 					cmd[2] = "/System/Library/PrivateFrameworks/Apple80211.framework/Versions/A/Resources/airport -s | grep ':' | tr -s ' ' | cut -d' ' -f3 -f4| tr ' ' '\n'";
-					
-				}
-				else {
+
+				} else {
 					System.out.println("Only linux and mac are the available operating systems");
 					System.exit(0);
 				}
@@ -298,8 +358,8 @@ public class CLI {
 				} catch (Exception ex) {
 					ex.printStackTrace();
 				}
-				aps=Arrays.copyOf(aps, counter);
-				for (int j=0; j<counter;j++) {
+				aps = Arrays.copyOf(aps, counter);
+				for (int j = 0; j < counter; j++) {
 					System.out.println(aps[j]);
 				}
 				response = client.estimatePosition(buid, floor, aps, algorithm);
@@ -313,19 +373,17 @@ public class CLI {
 				String buid = args[2];
 				String floor = args[3];
 				String algorithm = args[4];
-				
+
 				String cmd[] = new String[3];
 				if (operating_system.equals("linux")) {
 					cmd[0] = "/bin/sh";
 					cmd[1] = "-c";
 					cmd[2] = "sudo iwlist wlo1 scan | awk  '/Address/ {print $5}; /level/ {print $3}' |  cut -d\"=\" -f2 ";
-				}
-				else if (operating_system.equals("mac")) {
+				} else if (operating_system.equals("mac")) {
 					cmd[0] = "/bin/sh";
 					cmd[1] = "-c";
 					cmd[2] = "/System/Library/PrivateFrameworks/Apple80211.framework/Versions/A/Resources/airport -s | grep ':' | tr -s ' ' | cut -d' ' -f3 -f4| tr ' ' '\n'";
-				}
-				else {
+				} else {
 					System.out.println("Only linux and mac are the available operating systems");
 					System.exit(0);
 				}
@@ -353,7 +411,7 @@ public class CLI {
 				} catch (Exception ex) {
 					ex.printStackTrace();
 				}
-				aps=Arrays.copyOf(aps, counter);
+				aps = Arrays.copyOf(aps, counter);
 
 				response = client.estimatePositionOffline(buid, floor, aps, algorithm);
 				System.out.println(response + "\n"); /* .substring(0, 100) */

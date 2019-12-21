@@ -9,9 +9,9 @@ Preamble
 
 Author(s): Constandinos Demetriou, Christakis Achilleos, Marcos Antonios Charalambous
 
-Supervisor: Demetrios Zeinalipour-Yazti
-
 Co-supervisor: Paschalis Mpeis
+
+Supervisor: Demetrios Zeinalipour-Yazti
 
 Copyright (c) 2019 Data Management Systems Laboratory, University of Cyprus
 
